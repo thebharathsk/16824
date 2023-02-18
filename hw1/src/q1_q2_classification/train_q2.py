@@ -2,26 +2,34 @@ import torch
 import trainer
 from utils import ARGS
 from simple_cnn import SimpleCNN
+from simple_cnn import get_fc
 from voc_dataset import VOCDataset
 import numpy as np
 import torchvision
 import torch.nn as nn
 import random
-
+import os
 
 class ResNet(nn.Module):
     def __init__(self, num_classes) -> None:
         super().__init__()
 
-        self.resnet = torchvision.models.resnet18(weights='IMAGENET1K_V1')
+        self.resnet = torchvision.models.resnet18(weights='IMAGENET1K_V1', progress=True)
         
         # TODO define a FC layer here to process the features
+        #MY IMPLEMENTATION
+        self.resnet.fc = nn.Sequential(*get_fc(512, num_classes, 'none'))
 
     def forward(self, x):
         # TODO return unnormalized log-probabilities here
-
+        #MY IMPLEMENTATION        
+        out = self.resnet(x)
+        #out = self.fc1(x)
+        
+        return out
 
 if __name__ == "__main__":
+    print('Process ID = {}'.format(os.getpid()))
     np.random.seed(0)
     torch.manual_seed(0)
     random.seed(0)
@@ -32,16 +40,17 @@ if __name__ == "__main__":
 
     # TODO experiment a little and choose the correct hyperparameters
     # You should get a map of around 50 in 50 epochs
-    # args = ARGS(
-    #     epochs=50,
-    #     inp_size=64,
-    #     use_cuda=True,
-    #     val_every=70
-    #     lr=# TODO,
-    #     batch_size=#TODO,
-    #     step_size=#TODO,
-    #     gamma=#TODO
-    # )
+    args = ARGS(
+        epochs=50,
+        inp_size=224,
+        use_cuda=True,
+        val_every=70,
+        #set these variables
+        lr=1e-4,
+        batch_size=64,
+        step_size=1,
+        gamma=0.9
+    )
 
     
     print(args)

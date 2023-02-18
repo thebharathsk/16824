@@ -64,7 +64,7 @@ class ARGS(object):
     
     @property
     def device(self):
-        return torch.device("cuda" if self.use_cuda else "cpu")
+        return torch.device("mps" if self.use_cuda else "cpu")
 
 
 def get_data_loader(name='voc', train=True, batch_size=64, split='train', inp_size=224):
@@ -132,7 +132,8 @@ def eval_dataset_map(model, device, test_loader):
             data = data.to(device)
             output = model(data)
             
-            pred = F.softmax(output, dim=-1).cpu().numpy()
+            #pred = F.softmax(output, dim=-1).cpu().numpy()
+            pred = torch.sigmoid(output).cpu().numpy()
             gt = target.cpu().numpy()
             valid = wgt.cpu().numpy()
             

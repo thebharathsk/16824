@@ -25,10 +25,11 @@ class VOCDataset(Dataset):
         self.split = split
         self.data_dir = data_dir
         self.size = size
-        self.img_dir = os.path.join(data_dir, 'JPEGImages')
-        self.ann_dir = os.path.join(data_dir, 'Annotations')
+        self.root_dir = '/Users/bharath/Documents/acads/spring_2023/16824/hw1/src/q1_q2_classification/'
+        self.img_dir = os.path.join(self.root_dir, data_dir, 'JPEGImages')
+        self.ann_dir = os.path.join(self.root_dir, data_dir, 'Annotations')
 
-        split_file = os.path.join(data_dir, 'ImageSets/Main', split + '.txt')
+        split_file = os.path.join(self.root_dir, data_dir, 'ImageSets/Main', split + '.txt')
         with open(split_file) as fp:
             self.index_list = [line.strip() for line in fp]
 
@@ -67,8 +68,33 @@ class VOCDataset(Dataset):
             # The weight vector should be a 20-dimensional vector with weight[i] = 0 iff an object of class i has the `difficult` attribute set to 1 in the XML file and 1 otherwise
             # The difficult attribute specifies whether a class is ambiguous and by setting its weight to zero it does not contribute to the loss during training 
             weight_vec = torch.ones(20)
-
+            
             # TODO insert your code here
+            #MY IMPLEMENTATION
+            #get the root
+            root = tree.getroot()
+            
+            #identify objects in xml            
+            objects = root[6:]
+            
+            #parse class names and difficulties
+            object_classes = []
+            object_difficulties = []
+            
+            #iterate through objects
+            for o in objects:
+                object_classes.append(self.get_class_index(o[0].text))
+                object_difficulties.append(int(o[3].text))
+            
+            #update tensors
+            for (o, d) in zip(object_classes, object_difficulties):
+                class_vec[o] = 1
+                
+                #update weight vector
+                if d == 1:
+                    weight_vec[o] = 0
+                else:
+                    weight_vec[o] = 1
 
             label_list.append((class_vec, weight_vec))
 
@@ -81,7 +107,22 @@ class VOCDataset(Dataset):
         # Some commonly used ones are random crops, flipping, rotation
         # You are encouraged to read the docs https://pytorch.org/vision/stable/transforms.html
         # Depending on the augmentation you use, your final image size will change and you will have to write the correct value of `flat_dim` in line 46 in simple_cnn.py
-        pass
+        
+        #MY IMPLEMENTATION
+        
+        #store augmentations as list
+        augs = []
+        
+        #for train data
+        if 'train' in self.split:
+            augs = [transforms.RandomCrop(self.size),
+                    transforms.RandomHorizontalFlip(),
+                    transforms.ColorJitter(0.3, 0.3, 0.3, 0.2),
+                    transforms.RandomRotation(30)]
+        else:
+            augs = [transforms.CenterCrop(self.size)]
+        
+        return augs
 
     def __getitem__(self, index):
         """

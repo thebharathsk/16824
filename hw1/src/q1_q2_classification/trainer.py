@@ -5,7 +5,7 @@ import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 import utils
 from voc_dataset import VOCDataset
-
+from tqdm import tqdm
 
 def save_this_epoch(args, epoch):
     if args.save_freq > 0 and (epoch+1) % args.save_freq == 0:
@@ -34,9 +34,13 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
     model = model.to(args.device)
 
     cnt = 0
-
+    
+    #MY IMPLEMENTATION
+    #define loss function
+    loss_fn = torch.nn.BCELoss(reduction='none')
+    
     for epoch in range(args.epochs):
-        for batch_idx, (data, target, wgt) in enumerate(train_loader):
+        for batch_idx, (data, target, wgt) in tqdm(enumerate(train_loader), total = len(train_loader)):
             data, target, wgt = data.to(args.device), target.to(args.device), wgt.to(args.device)
 
             optimizer.zero_grad()
@@ -46,8 +50,19 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
             # This function should take in network `output`, ground-truth `target`, weights `wgt` and return a single floating point number
             # You are NOT allowed to use any pytorch built-in functions
             # Remember to take care of underflows / overflows when writing your function
-            loss = 0
+            
+            #MY IMPLEMENTATION
+            #convert outputs into probabilities
+            output = torch.sigmoid(output)
+            
+            #compute loss
+            loss = loss_fn(output, target)
+            
+            #apply weights to loss and compute mean
+            loss = loss*wgt
+            loss = loss.mean()
 
+            #compute gradients
             loss.backward()
             
             if cnt % args.log_every == 0:
