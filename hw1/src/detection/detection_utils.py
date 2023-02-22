@@ -139,12 +139,28 @@ def fcos_get_deltas_from_locations(
     ##########################################################################
     # Set this to Tensor of shape (N, 4) giving deltas (left, top, right, bottom)
     # from the locations to GT box edges, normalized by FPN stride.
-    deltas = None
-    pass
+    #MY IMPLEMENTATION
+    N = locations.size(0)
+    deltas = torch.zeros((N, 4), device=locations.device)
+    
+    #process each combination of location and gt box
+    for i in range(N):
+        #if box belongs to background
+        if gt_boxes[i,:4].sum() == -4:
+            deltas[i] = -1
+        else:
+            deltas[i,0] = locations[i,0] - gt_boxes[i,0] #left
+            deltas[i,1] = locations[i,1] - gt_boxes[i,1] #top
+            deltas[i,2] = gt_boxes[i,2] - locations[i,0] #right
+            deltas[i,3] = gt_boxes[i,3] - locations[i,1] #bottom
+    
+    #normalize deltas
+    deltas = deltas/stride
+    
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
-
+    
     return deltas
 
 
@@ -181,8 +197,24 @@ def fcos_apply_deltas_to_locations(
     # for our use-case because the feature center must lie INSIDE the final  #
     # box. Make sure to clip them to zero.                                   #
     ##########################################################################
+    #MY IMPLEMENTATION
+    #clip delta values
+    deltas = torch.clip(deltas, min=0)
+    
     output_boxes = None
-
+    N = locations.size(0)
+    output_boxes = torch.zeros((N, 4), device=locations.device)
+    
+    #process each combination of location and delta
+    for i in range(N):
+        #unnormalize delta
+        deltas[i] = deltas[i]*stride
+        
+        #find coordinates
+        output_boxes[i,0] = locations[i,0] - deltas[i,0] #left
+        output_boxes[i,1] = locations[i,1] - deltas[i,1] #top
+        output_boxes[i,2] = locations[i,0] + deltas[i,2] #right
+        output_boxes[i,3] = locations[i,1] + deltas[i,3] #bottom
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
@@ -215,7 +247,17 @@ def fcos_make_centerness_targets(deltas: torch.Tensor):
     #   (max(left, right) * max(top, bottom))
     # )
     ##########################################################################
+    #MY IMPLEMENTATION
     centerness = None
+    N = deltas.size(0)
+    centerness = torch.zeros((N, 4), device=deltas.device)
+    
+    #compute center-ness target
+    centerness = torch.sqrt((torch.minimum(deltas[:,0], deltas[:,2])*\
+                            torch.minimum(deltas[:,1], deltas[:,3]))/\
+                            (torch.maximum(deltas[:,0], deltas[:,2])*\
+                            torch.maximum(deltas[:,1], deltas[:,3])))
+    
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
@@ -258,7 +300,32 @@ def get_fpn_location_coords(
         ##################################################################–####
         # TODO: Implement logic to get location co-ordinates below.          #
         ######################################################################
-        pass
+        #MY IMPLEMENTATION
+        #find height and width
+        H, W = feat_shape.size(2), feat_shape.size(3)
+        
+        #create meshgrid coordinates
+        x = torch.arange(0, W, 1, device=device)
+        y = torch.arange(0, H, 1, device=device)
+        
+        xx, yy = torch.meshgrid(x, y)
+        
+        #apply stride
+        xx = level_stride*xx + level_stride//2
+        yy = level_stride*yy + level_stride//2
+        
+        #add third dimension
+        xx = xx.unsqueeze(-1)
+        yy = yy.unsqueeze(-1)
+        
+        #concatenate coordinates
+        coords = torch.cat((xx, yy), dim=-1)
+        
+        #reshape coordinates
+        coords = coords.view(-1, 2)
+        
+        #add coords to dictionary
+        location_coords[level_name] = coords        
         ######################################################################
         #                             END OF YOUR CODE                       #
         ######################################################################

@@ -23,9 +23,9 @@ if __name__ == "__main__":
         val_every=70,
         #These parameters can be reset
         lr=1e-3,
-        batch_size=64,
+        batch_size=32,
         step_size=1,
-        gamma=0.9,
+        gamma=1,
     )
 
     print(args)
