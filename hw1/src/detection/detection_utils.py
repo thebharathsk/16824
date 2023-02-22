@@ -61,16 +61,16 @@ def fcos_match_locations_to_gt(
         # Get stride for this FPN level.
         stride = strides_per_fpn_level[level_name]
 
-        x, y = centers.unsqueeze(dim=2).unbind(dim=1)
-        x0, y0, x1, y1 = gt_boxes[:, :4].unsqueeze(dim=0).unbind(dim=2)
-        pairwise_dist = torch.stack([x - x0, y - y0, x1 - x, y1 - y], dim=2)
+        x, y = centers.unsqueeze(dim=2).unbind(dim=1) # HWx1
+        x0, y0, x1, y1 = gt_boxes[:, :4].unsqueeze(dim=0).unbind(dim=2) #1xM
+        pairwise_dist = torch.stack([x - x0, y - y0, x1 - x, y1 - y], dim=2) #HWxMx4
 
         # Pairwise distance between every feature center and GT box edges:
         # shape: (num_gt_boxes, num_centers_this_level, 4)
-        pairwise_dist = pairwise_dist.permute(1, 0, 2)
+        pairwise_dist = pairwise_dist.permute(1, 0, 2) #MxHWx4
 
         # The original FCOS anchor matching rule: anchor point must be inside GT.
-        match_matrix = pairwise_dist.min(dim=2).values > 0
+        match_matrix = pairwise_dist.min(dim=2).values > 0 #MxHW
 
         # Multilevel anchor matching in FCOS: each anchor is only responsible
         # for certain scale range.
@@ -80,13 +80,13 @@ def fcos_match_locations_to_gt(
         lower_bound = stride * 4 if level_name != "p3" else 0
         upper_bound = stride * 8 if level_name != "p5" else float("inf")
         match_matrix &= (pairwise_dist > lower_bound) & (
-            pairwise_dist < upper_bound
+            pairwise_dist < upper_bound #MxHW
         )
 
         # Match the GT box with minimum area, if there are multiple GT matches.
         gt_areas = (gt_boxes[:, 2] - gt_boxes[:, 0]) * (
             gt_boxes[:, 3] - gt_boxes[:, 1]
-        )
+        ) #M
 
         # Get matches and their labels using match quality matrix.
         match_matrix = match_matrix.to(torch.float32)
