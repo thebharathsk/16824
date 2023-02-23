@@ -144,19 +144,21 @@ def fcos_get_deltas_from_locations(
     deltas = torch.zeros((N, 4), device=locations.device)
     
     #process each combination of location and gt box
-    for i in range(N):
-        #if box belongs to background
-        if gt_boxes[i,:4].sum() == -4:
-            deltas[i] = -1
-        else:
-            deltas[i,0] = locations[i,0] - gt_boxes[i,0] #left
-            deltas[i,1] = locations[i,1] - gt_boxes[i,1] #top
-            deltas[i,2] = gt_boxes[i,2] - locations[i,0] #right
-            deltas[i,3] = gt_boxes[i,3] - locations[i,1] #bottom
+    #mask to detect fg and bg boxes
+    fg_mask = torch.sum(gt_boxes[:,:4], dim=1) != -4
+    bg_mask = ~fg_mask
     
-    #normalize deltas
-    deltas = deltas/stride
+    #for bg boxes
+    deltas[bg_mask, :] = -1
     
+    #for fg boxes
+    deltas[fg_mask,0] = locations[fg_mask,0] - gt_boxes[fg_mask,0] #left
+    deltas[fg_mask,1] = locations[fg_mask,1] - gt_boxes[fg_mask,1] #top
+    deltas[fg_mask,2] = gt_boxes[fg_mask,2] - locations[fg_mask,0] #right
+    deltas[fg_mask,3] = gt_boxes[fg_mask,3] - locations[fg_mask,1] #bottom
+    
+    #normalize
+    deltas[fg_mask, :4] = deltas[fg_mask, :4]/stride    
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
@@ -206,15 +208,14 @@ def fcos_apply_deltas_to_locations(
     output_boxes = torch.zeros((N, 4), device=locations.device)
     
     #process each combination of location and delta
-    for i in range(N):
-        #unnormalize delta
-        deltas[i] = deltas[i]*stride
-        
-        #find coordinates
-        output_boxes[i,0] = locations[i,0] - deltas[i,0] #left
-        output_boxes[i,1] = locations[i,1] - deltas[i,1] #top
-        output_boxes[i,2] = locations[i,0] + deltas[i,2] #right
-        output_boxes[i,3] = locations[i,1] + deltas[i,3] #bottom
+    #unnormalize delta
+    deltas = deltas*stride
+    
+    #find coordinates
+    output_boxes[:,0] = locations[:,0] - deltas[:,0] #left
+    output_boxes[:,1] = locations[:,1] - deltas[:,1] #top
+    output_boxes[:,2] = locations[:,0] + deltas[:,2] #right
+    output_boxes[:,3] = locations[:,1] + deltas[:,3] #bottom
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
@@ -250,14 +251,21 @@ def fcos_make_centerness_targets(deltas: torch.Tensor):
     #MY IMPLEMENTATION
     centerness = None
     N = deltas.size(0)
-    centerness = torch.zeros((N, 4), device=deltas.device)
+    centerness = torch.zeros((N,), device=deltas.device)
+    
+    #mask for fg and bg boxes
+    fg_mask = torch.sum(deltas, dim=1) != -4
+    bg_mask = ~fg_mask
     
     #compute center-ness target
-    centerness = torch.sqrt((torch.minimum(deltas[:,0], deltas[:,2])*\
-                            torch.minimum(deltas[:,1], deltas[:,3]))/\
-                            (torch.maximum(deltas[:,0], deltas[:,2])*\
-                            torch.maximum(deltas[:,1], deltas[:,3])))
+    #fg boxes
+    centerness[fg_mask] = torch.sqrt((torch.minimum(deltas[fg_mask,0], deltas[fg_mask,2])*\
+                            torch.minimum(deltas[fg_mask,1], deltas[fg_mask,3]))/\
+                            (torch.maximum(deltas[fg_mask,0], deltas[fg_mask,2])*\
+                            torch.maximum(deltas[fg_mask,1], deltas[fg_mask,3])))
     
+    #bg boxes
+    centerness[bg_mask] = -1
     ##########################################################################
     #                             END OF YOUR CODE                           #
     ##########################################################################
@@ -302,7 +310,7 @@ def get_fpn_location_coords(
         ######################################################################
         #MY IMPLEMENTATION
         #find height and width
-        H, W = feat_shape.size(2), feat_shape.size(3)
+        H, W = feat_shape[2], feat_shape[3]
         
         #create meshgrid coordinates
         x = torch.arange(0, W, 1, device=device)
@@ -310,7 +318,7 @@ def get_fpn_location_coords(
         
         xx, yy = torch.meshgrid(x, y)
         
-        #apply stride
+        #apply stride to find coordinates in input image
         xx = level_stride*xx + level_stride//2
         yy = level_stride*yy + level_stride//2
         
@@ -319,13 +327,13 @@ def get_fpn_location_coords(
         yy = yy.unsqueeze(-1)
         
         #concatenate coordinates
-        coords = torch.cat((xx, yy), dim=-1)
+        coords = torch.cat((xx, yy), dim=-1) #HxWx2
         
         #reshape coordinates
-        coords = coords.view(-1, 2)
+        coords = coords.view(-1, 2) #HWx2
         
         #add coords to dictionary
-        location_coords[level_name] = coords        
+        location_coords[level_name] = coords
         ######################################################################
         #                             END OF YOUR CODE                       #
         ######################################################################

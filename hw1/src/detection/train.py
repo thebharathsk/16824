@@ -29,6 +29,10 @@ from detection_helper import VOC2007DetectionTiny
 from one_stage_detector import FCOS
 from utils.utils import detection_visualizer
 
+if torch.backends.mps.is_available():
+    print("Good to go with MPS!")
+    DEVICE = torch.device("mps")
+
 if torch.cuda.is_available():
     print("Good to go!")
     DEVICE = torch.device("cuda")
@@ -39,7 +43,7 @@ else:
 NUM_CLASSES = 20
 BATCH_SIZE = 16
 IMAGE_SHAPE = (224, 224)
-NUM_WORKERS = 12
+NUM_WORKERS = 4
 DATASET_PATH = "../data"
 
 @dataclass
