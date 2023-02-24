@@ -161,9 +161,9 @@ def main(args):
     
     print("Training model...")
     
-    # if not args.visualize_gt:
-    #     train_model(detector, train_loader, hyperparams, overfit=args.overfit)
-    # print("Training complete! Saving loss curve to loss.png...")
+    if not args.visualize_gt:
+        train_model(detector, train_loader, hyperparams, overfit=args.overfit)
+    print("Training complete! Saving loss curve to loss.png...")
     
     if not args.inference:
         return

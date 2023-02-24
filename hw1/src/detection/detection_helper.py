@@ -245,7 +245,7 @@ def train_detector(
     torch.save(detector.state_dict(), "fcos_detector.pt")
 
     #plot the loss function
-    plt.plot(loss_history, log_period*np.arange(0, len(loss_history)))
+    plt.plot(log_period*np.arange(0, len(loss_history)), loss_history)
     plt.ylabel('Loss')
     plt.xlabel('Iterations')
     plt.title('Loss Curve for FCOS training')
