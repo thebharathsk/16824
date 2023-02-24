@@ -160,9 +160,11 @@ def main(args):
         return
     
     print("Training model...")
-    if not args.visualize_gt:
-        train_model(detector, train_loader, hyperparams, overfit=args.overfit)
-    print("Training complete! Saving loss curve to loss.png...")
+    
+    # if not args.visualize_gt:
+    #     train_model(detector, train_loader, hyperparams, overfit=args.overfit)
+    # print("Training complete! Saving loss curve to loss.png...")
+    
     if not args.inference:
         return
     print("Running inference...")
@@ -179,7 +181,7 @@ def main(args):
 
         # Re-initialize so this cell is independent from prior cells.
         detector = FCOS(
-            num_classes=NUM_CLASSES, fpn_channels=128, stem_channels=[128, 128]
+            num_classes=NUM_CLASSES, fpn_channels=64, stem_channels=[64, 64]
         )
         detector.to(device=DEVICE)
         detector.load_state_dict(torch.load(weights_path, map_location="cpu"))
@@ -196,6 +198,17 @@ def main(args):
     else:
         print("Running inference and computing mAP...")
         assert os.path.exists("mAP")
+        
+        # Modify this depending on where you save your weights.
+        weights_path = os.path.join(".", "fcos_detector.pt")
+
+        # Re-initialize so this cell is independent from prior cells.
+        detector = FCOS(
+            num_classes=NUM_CLASSES, fpn_channels=64, stem_channels=[64, 64]
+        )
+        detector.to(device=DEVICE)
+        detector.load_state_dict(torch.load(weights_path, map_location="cpu"))
+        
         inference_with_detector(
             detector,
             val_loader,
@@ -214,13 +227,13 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--visualize_gt", action="store_true")
     parser.add_argument(
-        "--overfit", type=bool, default=True
+        "--overfit", action="store_true" 
     )
     parser.add_argument(
-        "--inference", type=bool, default=False
+        "--inference", action="store_true"
     )
     parser.add_argument(
-        "--test_inference", type=bool, default=False
+        "--test_inference", action="store_true"
     )
     args = parser.parse_args()
     print(args.test_inference)

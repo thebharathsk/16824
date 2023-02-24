@@ -615,20 +615,23 @@ class FCOS(nn.Module):
             level_pred_scores = torch.sqrt(
                 level_cls_logits.sigmoid_() * level_ctr_logits.sigmoid_()
             ) #HWxC
-            
             #MY IMPLEMENTATION
             # Step 1:
             # Replace "pass" statement with your code
             #identify highest probability class at each location
-            level_pred_classes = torch.argmax(level_cls_logits, dim=1) #HW
+            level_pred_scores, level_pred_classes = torch.max(level_pred_scores, dim=1) #HW
             
-            #identify scores for these classes
-            level_pred_scores = level_pred_scores[:,level_pred_classes] #HW
             
             # Step 2:
             # Replace "pass" statement with your code
             #filter predictions
             good_predictions = level_pred_scores > test_score_thresh #HW binary mask
+            
+            # print(level_pred_scores)
+            # print(good_predictions)
+            #if there are no good predictions make highest probability box the only good predcition
+            if good_predictions.sum() == 0:
+                good_predictions[torch.argmax(level_pred_scores)] = True 
 
             #apply filter on classes and prediction scores
             level_pred_classes = level_pred_classes[good_predictions] #K
@@ -646,14 +649,14 @@ class FCOS(nn.Module):
             # Replace "pass" statement with your code
             #clip box coordinates
             h, w = images.size(-2), images.size(-1)
-            
+                        
             #clip x coordinates
-            level_pred_boxes[0] = torch.clip(level_pred_boxes[0], min=0, max=w-1)
-            level_pred_boxes[2] = torch.clip(level_pred_boxes[2], min=0, max=w-1)
+            level_pred_boxes[:,0] = torch.clip(level_pred_boxes[:,0], min=0, max=w-1)
+            level_pred_boxes[:,2] = torch.clip(level_pred_boxes[:,2], min=0, max=w-1)
 
             #clip y coordinates
-            level_pred_boxes[1] = torch.clip(level_pred_boxes[1], min=0, max=h-1)
-            level_pred_boxes[3] = torch.clip(level_pred_boxes[3], min=0, max=h-1)
+            level_pred_boxes[:,1] = torch.clip(level_pred_boxes[:,1], min=0, max=h-1)
+            level_pred_boxes[:,3] = torch.clip(level_pred_boxes[:,3], min=0, max=h-1)
 
             ##################################################################
             #                          END OF YOUR CODE                      #

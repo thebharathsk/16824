@@ -8,6 +8,7 @@ import time
 
 import matplotlib.pyplot as plt
 import torch
+import numpy as np
 from PIL import Image
 from torch import optim
 from torchvision import transforms
@@ -242,6 +243,14 @@ def train_detector(
         writer.close()
     print("Finished training, saving model.")
     torch.save(detector.state_dict(), "fcos_detector.pt")
+
+    #plot the loss function
+    plt.plot(loss_history, log_period*np.arange(0, len(loss_history)))
+    plt.ylabel('Loss')
+    plt.xlabel('Iterations')
+    plt.title('Loss Curve for FCOS training')
+    plt.savefig('loss.png')
+    plt.close()
 
 def inference_with_detector(
     detector,
