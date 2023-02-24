@@ -287,16 +287,24 @@ In this question, we will try to recognize objects in natural images from the PA
 \begin{figure}[H]
     \centering
     % TODO: put your plot here.
-    \includegraphics{example-image-a}
-    \caption{Loss/Train for simple CNN}
+    \includegraphics[scale=0.8]{./results/q1/loss.png}
+    \caption{\texttt{Loss/Train} for simple CNN}
     \label{fig:q1_loss}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     % TODO: put your plot here.
-    \includegraphics{example-image-b}
-    \caption{learning\_rate for simple CNN}
+    \includegraphics{./results/q1/map.png}
+    \caption{\texttt{map} for simple CNN}
+    \label{fig:q1_map}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    % TODO: put your plot here.
+    \includegraphics{./results/q1/learning_rate.png}
+    \caption{\texttt{learning\_rate} for simple CNN}
     \label{fig:q1_loss}
 \end{figure}
 
@@ -318,7 +326,7 @@ Hopefully we all got much better accuracy with the deeper model! Since 2012, muc
 \begin{figure}[H]
 \centering
 % TODO: put your plot here.
-\includegraphics{example-image-a}
+\includegraphics[scale=0.7]{./results/q2/map.png}
 \caption{mAP}
 \label{fig:q2_map}
 \end{figure}
@@ -326,7 +334,7 @@ Hopefully we all got much better accuracy with the deeper model! Since 2012, muc
 \begin{figure}[H]
 \centering
 % TODO: put your plot here.
-\includegraphics{example-image-b}
+\includegraphics[scale=0.5]{./results/q2/learning_rate.png}
 \caption{learning\_rate}
 \label{fig:q2_learning_rate}
 \end{figure}
@@ -334,7 +342,15 @@ Hopefully we all got much better accuracy with the deeper model! Since 2012, muc
 \begin{figure}[H]
 \centering
 % TODO: put your plot here.
-\includegraphics{example-image-c}
+\includegraphics[scale=0.5]{./results/q2/loss.png}
+\caption{Training Loss}
+\label{fig:q2_training_loss}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+% TODO: put your plot here.
+\includegraphics[scale=0.5]{./results/q2/hist_conv.png}
 \caption{histogram\_conv1}
 \label{fig:q2_histogram_conv1}
 \end{figure}
@@ -342,7 +358,7 @@ Hopefully we all got much better accuracy with the deeper model! Since 2012, muc
 \begin{figure}[H]
 \centering
 % TODO: put your plot here.
-\includegraphics{example-image-c}
+\includegraphics[scale=0.5]{./results/q2/hist_bn.png}
 \caption{histogram\_bn}
 \label{fig:q2_bn}
 \end{figure}
@@ -411,7 +427,7 @@ In this problem, we'll be implementing supervised {\href{https://arxiv.org/abs/1
 
 \begin{figure}[H]
     \centering
-    \includegraphics{example-image-c}
+    \includegraphics[scale=0.55]{./results/q3/results.png}
     \caption{Tensorboard Inference Results}
     \label{fig:inference_results}
 \end{figure}
