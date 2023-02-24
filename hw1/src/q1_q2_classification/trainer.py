@@ -5,7 +5,6 @@ import numpy as np
 from torch.utils.tensorboard import SummaryWriter
 import utils
 from voc_dataset import VOCDataset
-from tqdm import tqdm
 
 def save_this_epoch(args, epoch):
     if args.save_freq > 0 and (epoch+1) % args.save_freq == 0:
@@ -40,7 +39,7 @@ def train(args, model, optimizer, scheduler=None, model_name='model'):
     loss_fn = torch.nn.BCELoss(reduction='none')
     
     for epoch in range(args.epochs):
-        for batch_idx, (data, target, wgt) in tqdm(enumerate(train_loader), total = len(train_loader)):
+        for batch_idx, (data, target, wgt) in enumerate(train_loader):
             data, target, wgt = data.to(args.device), target.to(args.device), wgt.to(args.device)
 
             optimizer.zero_grad()
