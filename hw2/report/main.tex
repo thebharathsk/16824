@@ -1,0 +1,504 @@
+\documentclass[11pt,addpoints,answers]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{url}
+\usepackage{xfrac}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{paralist}
+\usepackage{epstopdf}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{fancyvrb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{float}
+\usepackage{paralist}
+\usepackage[svgname]{xcolor}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{times}
+\usepackage{url}
+\usepackage{comment}
+\usepackage{environ}
+\usepackage{times}
+\usepackage{textcomp}
+\usepackage{caption}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage{parskip} % For NIPS style paragraphs.
+\usepackage[compact]{titlesec} % Less whitespace around titles
+\usepackage[inline]{enumitem} % For inline enumerate* and itemize*
+\usepackage{datetime}
+\usepackage{comment}
+% \usepackage{minted}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,bayesnet}
+%\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cprotect}
+\usepackage{xcolor}
+\usepackage{verbatimbox}
+\usepackage[many]{tcolorbox}
+\usepackage{cancel}
+\usepackage{wasysym}
+\usepackage{mdframed}
+\usepackage{subcaption}
+\usetikzlibrary{shapes.geometric}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting for \CorrectChoice of "exam" %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\CorrectChoiceEmphasis{}
+\checkedchar{\blackcircle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Better numbering                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Common Math Commands                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{mathabbreviations.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code highlighting with listings         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{light-gray}{gray}{0.95}
+
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{Shell}{
+  keywords={tar, cd, make},
+  %keywordstyle=\color{bluekeywords}\bfseries,
+  alsoletter={+},
+  ndkeywords={python, py, javac, java, gcc, c, g++, cpp, .txt, octave, m, .tar},
+  %ndkeywordstyle=\color{bluekeywords}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  backgroundcolor = \color{light-gray}
+}
+
+\lstset{columns=fixed, basicstyle=\ttfamily,
+    backgroundcolor=\color{light-gray},xleftmargin=0.5cm,frame=tlbr,framesep=4pt,framerule=0pt}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom box for highlights               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define box and box title style
+\tikzstyle{mybox} = [fill=blue!10, very thick,
+    rectangle, rounded corners, inner sep=1em, inner ysep=1em]
+
+% \newcommand{\notebox}[1]{
+% \begin{tikzpicture}
+% \node [mybox] (box){%
+%     \begin{minipage}{\textwidth}
+%     #1
+%     \end{minipage}
+% };
+% \end{tikzpicture}%
+% }
+
+\NewEnviron{notebox}{
+\begin{tikzpicture}
+\node [mybox] (box){
+    \begin{minipage}{\textwidth}
+        \BODY
+    \end{minipage}
+};
+\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands showing / hiding solutions     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% To HIDE SOLUTIONS (to post at the website for students), set this value to 0: \def\issoln{0}
+\def\issoln{0}
+% Some commands to allow solutions to be embedded in the assignment file.
+\ifcsname issoln\endcsname \else \def\issoln{0} \fi
+% Default to an empty solutions environ.
+\NewEnviron{soln}{}{}
+% Default to an empty qauthor environ.
+\NewEnviron{qauthor}{}{}
+% Default to visible (but empty) solution box.
+\newtcolorbox[]{studentsolution}[1][]{%
+    breakable,
+    enhanced,
+    colback=white,
+    title=Solution,
+    #1
+}
+
+\if\issoln 1
+% Otherwise, include solutions as below.
+\RenewEnviron{soln}{
+    \leavevmode\color{red}\ignorespaces
+    \textbf{Solution} \BODY
+}{}
+\fi
+
+\if\issoln 1
+% Otherwise, include solutions as below.
+\RenewEnviron{solution}{}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands for customizing the assignment %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\courseNum}{\href{https://visual-learning.cs.cmu.edu/}{16824}}
+\newcommand{\courseName}{\href{https://visual-learning.cs.cmu.edu/}{Visual Learning and Recognition}}
+\newcommand{\courseSem}{\href{https://visual-learning.cs.cmu.edu/}{Spring 2023}}
+\newcommand{\courseUrl}{\url{https://piazza.com/class/lcy4ow5l5xp2fl}}
+\newcommand{\hwNum}{Homework 2}
+\newcommand{\hwTopic}{Generative Modelling}
+\newcommand{\hwName}{\hwNum: \hwTopic}
+\newcommand{\outDate}{Thurs, 23rd Feb 2023}
+\newcommand{\dueDate}{Wed, 15th March 2023}
+\newcommand{\instructorName}{Deepak Pathak}
+\newcommand{\taNames}{Ananye Agarwal, Rohan Choudhury, Murtaza Dalal, Russell Mendonca}
+
+%\pagestyle{fancyplain}
+\lhead{\hwName}
+\rhead{\courseNum}
+\cfoot{\thepage{} of \numpages{}}
+
+\title{\textsc{\hwName}} % Title
+
+
+\author{}
+
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Useful commands for typesetting the questions %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand \expect {\mathbb{E}}
+\newcommand \mle [1]{{\hat #1}^{\rm MLE}}
+\newcommand \map [1]{{\hat #1}^{\rm MAP}}
+\newcommand \argmax {\operatorname*{argmax}}
+\newcommand \argmin {\operatorname*{argmin}}
+\newcommand \code [1]{{\tt #1}}
+\newcommand \datacount [1]{\#\{#1\}}
+\newcommand \ind [1]{\mathbb{I}\{#1\}}
+
+\newcommand{\blackcircle}{\tikz\draw[black,fill=black] (0,0) circle (1ex);}
+\renewcommand{\circle}{\tikz\draw[black] (0,0) circle (1ex);}
+
+\newcommand{\pts}[1]{\textbf{[#1 pts]}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document configuration %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't display a date in the title and remove the white space
+\predate{}
+\postdate{}
+\date{}
+
+%%%%%%%%%%%%%%%%%%
+% Begin Document %
+%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\section*{}
+\begin{center}
+  \textsc{\LARGE \hwNum} \\
+%   \textsc{\LARGE \hwTopic\footnote{Compiled on \today{} at \currenttime{}}} \\
+  \vspace{1em}
+  \textsc{\large \courseNum{} \courseName{} (\courseSem)} \\
+  %\vspace{0.25em}
+  \courseUrl\\
+  \vspace{1em}
+  RELEASED: \outDate \\
+  DUE: \dueDate \\
+  Instructor: \instructorName \\
+  TAs: \taNames
+\end{center}
+
+\section*{START HERE: Instructions}
+\begin{itemize}
+\item \textbf{Collaboration policy:} All are encouraged to work together BUT you must do your own work (code and write up). If you work with someone, please include their name in your write-up and cite any code that has been discussed. If we find highly identical write-ups or code or lack of proper accreditation of collaborators, we will take action according to strict university policies. See the \href{hhttps://www.cmu.edu/policies/student-and-student-life/academic-integrity.html}{Academic Integrity Section} detailed in the initial lecture for more information.
+
+\item\textbf{Late Submission Policy:} There are a \textbf{total of 7} late days across all homework submissions. Submissions more than 7 days after the deadline will receive a 0.
+
+\item\textbf{Submitting your work:}
+
+\begin{itemize}
+
+\item We will be using Gradescope (\url{https://gradescope.com/}) to submit the Problem Sets. Please use the provided template only. Submissions must be written in LaTeX. All submissions not adhering to the template will not be graded and receive a zero. 
+\item \textbf{Deliverables:} Please submit all the \texttt{.py} files. Add all relevant plots and text answers in the boxes provided in this file. TO include plots you can simply modify the already provided latex code. Submit the compiled \texttt{.pdf} report as well.
+\end{itemize}
+\end{itemize}
+\emph{NOTE: Partial points will be given for implementing parts of the homework even if you don't get the mentioned numbers as long as you include partial results in this pdf.}
+\clearpage
+
+\section{Generative Adversarial Networks (50 points)}
+We will be training Generative Adversarial Networks (\href{(https://arxiv.org/pdf/1406.2661.pdf)}{GAN}) on the \href{http://www.vision.caltech.edu/visipedia/CUB-200-2011.html}{CUB 2011 Dataset}. 
+\begin{itemize}
+    \item \textbf{Setup:} Run the following command to setup everything you need for the assignment: \\ \texttt{./setup.sh /path/to/python\_env/lib/python3.8/site-packages}
+\item \textbf{Question:} Follow the instructions in the \texttt{README.md} file in the \texttt{gan/} folder to complete the implementation of GANs.
+\item \textbf{Deliverables:} The code will log plots to \texttt{gan/data\_gan}, \texttt{gan/data\_ls\_gan}, and \texttt{gan/data\_wgan\_gp}. Extract plots and paste them into the appropriate section below. Note for all questions, we ask for final FID. Final FID is computed using 50K samples, at the very end of training. See the final print out for "Final FID  (Full 50K): ". 
+\item \textbf{Debugging Tips:}
+    \begin{itemize}
+        \item GAN losses are pretty much meaningless! If you want to understand if your network is learning, visualize the samples. The FID score should generally be going down as well.
+        \item Do NOT change the hyper-parameters at all, they have been carefully tuned to ensure the networks will train stably. If things aren't working its a bug in your code.
+        \item For debugging, disable JIT using \texttt{export PYTORCH\_JIT=0 python ...} and disable AMP by using the flag \texttt{--disable\_amp}. However, do note that disabling JIT will cause the FID calculation to fail. So only disable JIT to make sure that your network code runs correctly, then re-enable when training. If you observe any errors involving type mismatches and tensors that have half types, it is due to AMP, you may need to explicitly cast the tensor using \texttt{.half()}.
+        \item 
+        \begin{minipage}[t]{\linewidth}
+          Here is a sample image from WGAN-GP at the end of training. The other networks may have variations but should look similar: 
+          \medskip
+          \\
+          \includegraphics[width=.4\linewidth]{examples/samples_30000.png}
+          \end{minipage}
+    \end{itemize}
+\item \textbf{Expected results:}
+    \begin{itemize}
+        \item Vanilla GAN: Final FID should be less than 110.
+        \item LS-GAN: Final FID should be less than 90.
+        \item WGAN-GP: Final FID should be less than 70.
+    \end{itemize}
+\end{itemize}
+\newpage
+\begin{questions}
+\question Paste your plot of the samples and latent space interpolations from Vanilla GAN as well as the \textit{final} FID score you obtained. 
+\\
+FID: \textbf{TODO: fill in the FID here.} 
+\begin{figure}[H]
+    \centering
+    % TODO: put your plot here.
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Samples}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Latent Space Interpolations}
+    \end{subfigure}
+\end{figure}
+\question Paste your plot of the samples and latent space interpolations from LS-GAN as well as the \textit{final} FID score you obtained. 
+\\
+FID: \textbf{TODO: fill in the FID here.} 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Samples}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Latent Space Interpolations}
+    \end{subfigure}
+\end{figure}
+\question Paste your plot of the samples and latent space interpolations from WGAN-GP as well as the \textit{final} FID score you obtained. 
+\\
+FID: \textbf{TODO: fill in the FID here.} 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Samples}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Latent Space Interpolations}
+    \end{subfigure}
+\end{figure}    
+\end{questions}
+\clearpage
+
+\section{Variational Autoencoders (30 pts)}
+
+We will be training AutoEncoders and Variational Auto-Encoders (\href{https://arxiv.org/abs/1312.6114}{VAE}) on the \href{https://www.cs.toronto.edu/~kriz/cifar.html}{CIFAR10} dataset.
+
+\begin{itemize}
+\item \textbf{Question:} Follow the instructions in the \texttt{README.md} file in the \texttt{vae/} folder to complete the implementation of VAEs.
+\item \textbf{Deliverables:} The code will log plots to different folders in \texttt{vae}. Please paste the plots into the appropriate place for the questions below. Note for ALL questions, use the reconstructions and samples from the final epoch (epoch 19). 
+\item \textbf{Debugging Tips:}
+    \begin{itemize}
+        \item Make sure the auto-encoder can produce good quality reconstructions before moving on to the VAE. 
+        While the VAE reconstructions might not be clear and the VAE samples even less so, the auto-encoder reconstructions should be very clear.
+        \item If you are struggling to get the VAE portion working: debug the KL loss independently of the reconstruction loss to ensure the learned distribution matches standard normal. 
+    \end{itemize}
+\item \textbf{Expected results:}
+    \begin{itemize}
+        \item AE: reconstruction loss should be $<40$, reconstructions should look similar to original image.
+        \item VAE: reconstruction loss should be $< 145$ ($\beta=1$ case).
+        \item VAE: reconstruction loss should be $< 125$ when annealing $\beta$.
+    \end{itemize}
+\end{itemize}
+\newpage
+\begin{questions}
+\question Autoencoder: For each latent size, paste your plot of the reconstruction loss curve and reconstructions.
+\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Loss: latent size 16}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Loss: latent size 128}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Loss: latent size 1024}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Reconstructions: latent size 16}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Reconstructions: latent size 128}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Reconstructions: latent size 1024}
+    \end{subfigure}
+\end{figure}
+\question VAE: Choose the $\beta$ that results in the best sample quality, $\beta^*$. Paste the reconstruction and kl loss curve plots as well as the sample images corresponding to the VAE trained using constant $\beta^*$ and the VAE trained using $\beta$ annealing scheme with $\beta^*$.
+\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Recon. Loss: constant $\beta^*$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{KL Loss: constant $\beta^*$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Samples: constant $\beta^*$}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Recon. Loss: $\beta$ annealed}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{KL Loss: $\beta$ annealed}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+    \includegraphics[width=\linewidth]{example-image}
+    \caption{Samples: $\beta$ annealed}
+    \end{subfigure}
+\end{figure}
+\end{questions}
+\newpage
+
+\section{Diffusion Models (20 points)}
+We will be running inference using a pre-trained diffusion model (\href{https://arxiv.org/abs/2006.11239}{DDPM}) on CIFAR-10. 
+\begin{itemize}
+\item \textbf{Setup:} Download our pre-trained checkpoint for DDPM from \href{https://drive.google.com/file/d/1gtn9Jv9jBUol7iJw-94hw4j6KfpG3SZE/view?usp=sharing}{https://drive.google.com/file/d/1gtn9Jv9jBUol7iJw-94hw4j6KfpG3SZE/view?usp=sharing}.
+\item \textbf{Question:} Follow the instructions in the \texttt{README.md} file in the \texttt{diffusion/} folder to complete the implementation of the sampling procedures for Diffusion Models.
+\item \textbf{Deliverables:} The code will log plots to \texttt{diffusion/data\_ddpm} and \texttt{diffusion/data\_ddim}. Extract plots and paste them into the appropriate section below. 
+\item \textbf{Expected results:} 
+    \begin{itemize}
+        \item FID of less than 60 for DDPM and DDIM
+    \end{itemize}
+\end{itemize}
+\begin{questions}
+\question Paste your plots of the DDPM and DDIM samples.
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{DDPM Samples}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{DDIM Samples}
+    \end{subfigure}
+\end{figure}
+\question Paste in the FID score you obtained from running inference using DDPM and DDIM.
+\\
+DDPM FID: \textbf{TODO: fill in the FID here.} \\
+DDIM FID: \textbf{TODO: fill in the FID here.} 
+
+\end{questions}
+\clearpage
+
+\clearpage
+
+\textbf{Collaboration Survey} Please answer the following:
+
+\begin{enumerate}
+    \item Did you receive any help whatsoever from anyone in solving this assignment?
+    \begin{checkboxes}
+     \choice Yes
+     \choice No
+    \end{checkboxes}
+    \begin{itemize}
+        \item If you answered `Yes', give full details:
+        \item (e.g. “Jane Doe explained to me what is asked in Question 3.4”)
+    \end{itemize}
+
+    \begin{tcolorbox}[fit,height=3cm,blank, borderline={1pt}{-2pt},nobeforeafter]
+    %Input your solution here.  Do not change any of the specifications of this solution box.
+    \end{tcolorbox}
+
+    \item Did you give any help whatsoever to anyone in solving this assignment?
+    \begin{checkboxes}
+     \choice Yes
+     \choice No\
+    \end{checkboxes}
+    \begin{itemize}
+        \item If you answered `Yes', give full details:
+        \item (e.g. “I pointed Joe Smith to section 2.3 since he didn’t know how to proceed with Question 2”)
+    \end{itemize}
+
+    \begin{tcolorbox}[fit,height=3cm,blank, borderline={1pt}{-2pt},nobeforeafter]
+    %Input your solution here.  Do not change any of the specifications of this solution box.
+    \end{tcolorbox}
+
+    \item Note that copying code or writeup even from a collaborator or anywhere on the internet violates the \href{hhttps://www.cmu.edu/policies/student-and-student-life/academic-integrity.html}{Academic Integrity Code of Conduct}.
+\end{enumerate}
+
+\end{document}
