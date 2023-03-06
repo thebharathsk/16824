@@ -21,7 +21,7 @@ python train.py --log_dir ae_latent1024 --loss_mode ae --latent_size 1024
 *2.6*. Train the VAE for 20 epochs. Use the latent size from 2.3 that produces the sharpest reconstructions.
 Commands:
 ```
-python train.py --log_dir vae_latent_rep --loss_mode vae --latent_size <>
+python train.py --log_dir vae_latent_rep --loss_mode vae --latent_size 1024
 ```
 
 *2.7*. The blurriness of the samples can be reduced by tuning the value of beta. Use the latent size from 2.3 that produces the sharpest reconstructions.

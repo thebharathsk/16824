@@ -24,6 +24,7 @@ def ae_loss(model, x):
     #predict output
     z = model.encoder(x)
     x_pred = model.decoder(z)
+    
     #compute loss
     loss = torch.mean((x_pred - x)**2)
     
@@ -52,18 +53,23 @@ def vae_loss(model, x, beta = 1):
     x_pred = model.decoder(z)
     
     #compute reconstruction loss
-    recon_loss = torch.mean((x_pred - x)**2)
+    recon_loss = torch.sum((x_pred - x)**2)
+    recon_loss = recon_loss/(1024*x.size(0))
     
     #compute kl loss
-    kl_loss = 0.5*(-1-torch.log(std**2) + mu**2 + std**2)
-    kl_loss = kl_loss.sum()/mu.size(0)
+    kl_loss = -0.5*torch.sum(1 + 2*log_std - mu**2 - std**2)
+    kl_loss = kl_loss/(1024*x.size(0))
     
     #compute total loss
-    total_loss = recon_loss + beta*kl_loss
+    total_loss = recon_loss + kl_loss
     
-    print("total = {}, recon = {}, kl = {}".format(total_loss.cpu().item(), \
-                                                recon_loss.cpu().item(), \
-                                                kl_loss.cpu().item()))
+    # print("total = {}, recon = {}, kl = {}".format(total_loss.cpu().item(), \
+    #                                             recon_loss.cpu().item(), \
+    #                                             kl_loss.cpu().item()))
+    
+    # print("mu = ", mu[::100])
+    # print("std = ", std[::100])
+    # print('#######')
     
     return total_loss, OrderedDict(recon_loss=recon_loss, kl_loss=kl_loss)
 
@@ -123,7 +129,7 @@ def main(log_dir, loss_mode = 'vae', beta_mode = 'constant', num_epochs = 20, ba
     train_loader, val_loader = get_dataloaders()
 
     variational = True if loss_mode == 'vae' else False
-    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("mps") #MY IMPLEMENTATION
+    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("cuda") #MY IMPLEMENTATION
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     vis_x = next(iter(val_loader))[0][:36]
