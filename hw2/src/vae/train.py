@@ -36,6 +36,35 @@ def vae_loss(model, x, beta = 1):
     (https://stats.stackexchange.com/questions/318748/deriving-the-kl-divergence-loss-for-vaes).
     return loss, {recon_loss = loss}
     """
+    #MY IMPLEMENTATION
+    #perform forward pass
+    #encoder
+    mu, log_std = model.encoder(x)
+    
+    #convert log std to std
+    std = torch.exp(log_std)
+    
+    #compute latent vector
+    eps = torch.randn(mu.size(), device = mu.device)
+    z = mu + eps*std
+    
+    #decoder
+    x_pred = model.decoder(z)
+    
+    #compute reconstruction loss
+    recon_loss = torch.mean((x_pred - x)**2)
+    
+    #compute kl loss
+    kl_loss = 0.5*(-1-torch.log(std**2) + mu**2 + std**2)
+    kl_loss = kl_loss.sum()/mu.size(0)
+    
+    #compute total loss
+    total_loss = recon_loss + beta*kl_loss
+    
+    print("total = {}, recon = {}, kl = {}".format(total_loss.cpu().item(), \
+                                                recon_loss.cpu().item(), \
+                                                kl_loss.cpu().item()))
+    
     return total_loss, OrderedDict(recon_loss=recon_loss, kl_loss=kl_loss)
 
 
@@ -50,7 +79,7 @@ def linear_beta_scheduler(max_epochs=None, target_val = 1):
     from 0 at epoch 0 to target_val at epoch max_epochs
     """
     def _helper(epoch):
-        return None
+        return (epoch/max_epochs)*target_val
     return _helper
 
 def run_train_epoch(model, loss_mode, train_loader, optimizer, beta = 1, grad_clip = 1):
@@ -94,7 +123,7 @@ def main(log_dir, loss_mode = 'vae', beta_mode = 'constant', num_epochs = 20, ba
     train_loader, val_loader = get_dataloaders()
 
     variational = True if loss_mode == 'vae' else False
-    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("cuda") #MY IMPLEMENTATION
+    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("mps") #MY IMPLEMENTATION
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     vis_x = next(iter(val_loader))[0][:36]
