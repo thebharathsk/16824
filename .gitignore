@@ -1,6 +1,10 @@
+.DS_Store
 hw1/src/q1_q2_classification/data
 hw1/src/data
+hw1/src/datasets
 hw1/src/detection/detection_logs
 hw1/src/detection/mAP/input
+hw2/src/vae/data
+hw2/src/datasets
 runs/
 *.pyc

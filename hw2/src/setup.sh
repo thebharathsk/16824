@@ -1,4 +1,4 @@
-pip install -r requirements.txt
+#pip install -r requirements.txt
 mkdir $1/cleanfid/stats/cub_clean_custom_na.npz
 mkdir -p datasets/
 rm -rf datasets/* # clear directory content

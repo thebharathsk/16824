@@ -13,13 +13,20 @@ from matplotlib import pyplot as plt
 import time
 import os
 from utils import *
+from tqdm import tqdm
 
 def ae_loss(model, x):
     """
     TODO 2.2: fill in MSE loss between x and its reconstruction.
     return loss, {recon_loss = loss}
     """
-
+    #MY IMPLEMENTATION
+    #predict output
+    z = model.encoder(x)
+    x_pred = model.decoder(z)
+    #compute loss
+    loss = torch.mean((x_pred - x)**2)
+    
     return loss, OrderedDict(recon_loss=loss)
 
 def vae_loss(model, x, beta = 1):
@@ -43,12 +50,13 @@ def linear_beta_scheduler(max_epochs=None, target_val = 1):
     from 0 at epoch 0 to target_val at epoch max_epochs
     """
     def _helper(epoch):
+        return None
     return _helper
 
 def run_train_epoch(model, loss_mode, train_loader, optimizer, beta = 1, grad_clip = 1):
     model.train()
     all_metrics = []
-    for x, _ in train_loader:
+    for x, _ in tqdm(train_loader, total=len(train_loader)):
         x = preprocess_data(x)
         if loss_mode == 'ae':
             loss, _metric = ae_loss(model, x)
@@ -86,7 +94,7 @@ def main(log_dir, loss_mode = 'vae', beta_mode = 'constant', num_epochs = 20, ba
     train_loader, val_loader = get_dataloaders()
 
     variational = True if loss_mode == 'vae' else False
-    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).cuda()
+    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("mps") #MY IMPLEMENTATION
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     vis_x = next(iter(val_loader))[0][:36]
