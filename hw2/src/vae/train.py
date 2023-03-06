@@ -94,7 +94,7 @@ def main(log_dir, loss_mode = 'vae', beta_mode = 'constant', num_epochs = 20, ba
     train_loader, val_loader = get_dataloaders()
 
     variational = True if loss_mode == 'vae' else False
-    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("mps") #MY IMPLEMENTATION
+    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("cuda") #MY IMPLEMENTATION
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     vis_x = next(iter(val_loader))[0][:36]

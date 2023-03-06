@@ -37,7 +37,7 @@ def get_dataloaders(batch_size = 256):
 
 def preprocess_data(x):
     x = 2*x - 1
-    return x.to('mps') #MY IMPLEMENTATION
+    return x.to('cuda') #MY IMPLEMENTATION
 
 def avg_dict(all_metrics):
     keys = all_metrics[0].keys()

@@ -43,10 +43,19 @@ class VAEEncoder(Encoder):
     def __init__(self, input_shape, latent_dim):
         super().__init__(input_shape, latent_dim)
         #TODO 2.4: fill in self.fc, such that output dimension is 2*self.latent_dim
+        #MY IMPLEMENTATION
+        #number of elements in input
+        self.input_size = input_shape[0]*input_shape[1]*input_shape[2]
+        
+        #define encoder
+        self.fc = nn.Linear(self.input_size, latent_dim*2)
 
     def forward(self, x):
         #TODO 2.4: forward pass through the network.
         # should return a tuple of 2 tensors, mu and log_std
+        #MY IMPLEMENTATION
+        
+        
         return mu, log_std
 
 
