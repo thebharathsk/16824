@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class UpSampleConv2D(torch.jit.ScriptModule):
     # TODO 1.1: Implement nearest neighbor upsampling + conv layer
 
@@ -36,7 +35,7 @@ class UpSampleConv2D(torch.jit.ScriptModule):
         
         #MY IMPLEMENTATION        
         #repeat along channel axis
-        x = torch.repeat_interleave(x, self.upscale_factor**2, 1) #NxC*d*dxHxW
+        x = torch.repeat_interleave(x, int(self.upscale_factor**2), 1) #NxC*d*dxHxW
         
         #pixel shuffle
         x = self.pixel_shuffle(x) #NxCxH*dxW*d
@@ -73,15 +72,15 @@ class DownSampleConv2D(torch.jit.ScriptModule):
         # 3. Average across dimension 0, apply convolution and return output
 
         #MY IMPLEMENTATION
-        C = x.size(0)
-         
+        C = x.size(1)
+                 
         #unshuffle
         x = self.pixel_unshuffle(x) #NxCxH*dxW*d => NxC*d*dxHxW
         
         #reshape
-        _,_,H,W = x.size()
+        N,_,H,W = x.size()
         x = x.unsqueeze(2) #NxC*d*dx1xHxW
-        x = x.view(-1, C, self.downscale_ratio**2, H, W) #NxCxd*dxHxW
+        x = x.view(N, C, int(self.downscale_ratio**2), H, W) #NxCxd*dxHxW
         
         #mean across 3rd dimension
         x = torch.mean(x, dim=2) #NxCxHxW
@@ -181,13 +180,13 @@ class ResBlockDown(torch.jit.ScriptModule):
         # TODO 1.1: Forward through self.layers and implement a residual connection.
         # Make sure to downsample the residual before adding it to the layer output.
                 #MY IMPLEMENTATION
-        
+                
         #MY IMPLEMENTATION
         #pass through layers
         x_1 = self.layers(x)
         
         #upsample input
-        x_2 = self.upsample_residual(x)
+        x_2 = self.downsample_residual(x)
         
         #make the residual connection
         out = x_1 + x_2
@@ -323,7 +322,7 @@ class Generator(torch.jit.ScriptModule):
         # TODO 1.1: Generate n_samples latents and forward through the network.
         #MY IMPLEMENTATION
         #generate latent vector
-        z = torch.randn([n_samples, self.in_features])
+        z = torch.randn([n_samples, self.in_features], device="cuda")
         
         #generate images
         out = self.forward_given_samples(z)
@@ -393,7 +392,7 @@ class Discriminator(torch.jit.ScriptModule):
                                     ResBlock(128, 3, 128),
                                     nn.ReLU()
                                     )
-        self.dense = nn.Linear(in_features=128, out_features=1, bias=True)
+        self.dense = nn.Linear(in_features=8192, out_features=1, bias=True)
 
     @torch.jit.script_method
     def forward(self, x):
@@ -409,7 +408,7 @@ class Discriminator(torch.jit.ScriptModule):
         
         #reshape
         x = x.view(B, -1)
-        
+                
         #regress 
         x = self.dense(x)
         

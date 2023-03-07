@@ -10,7 +10,7 @@ from train import train_model
 
 
 def compute_discriminator_loss(
-    discrim_real, discrim_fake, discrim_interp, interp, lamb
+    discrim_real, discrim_fake, discrim_interp=None, interp=None, lamb=None
 ):
     """
     TODO 1.3.1: Implement GAN loss for discriminator.
