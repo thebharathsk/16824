@@ -15,6 +15,15 @@ def compute_discriminator_loss(
     TODO 1.4.1: Implement LSGAN loss for discriminator.
     Do not use discrim_interp, interp, lamb. They are placeholders for Q1.5.
     """
+    
+    #loss for real data
+    loss_real = (discrim_real - 1).pow(2).mean()
+    
+    #loss for fake data
+    loss_fake = (discrim_fake).pow(2).mean()
+    
+    loss = (loss_real + loss_fake)/2
+    
     return loss
 
 
@@ -22,6 +31,7 @@ def compute_generator_loss(discrim_fake):
     """
     TODO 1.4.1: Implement LSGAN loss for generator.
     """
+    loss = ((discrim_fake - 1).pow(2).mean())/2
     return loss
 
 if __name__ == "__main__":
