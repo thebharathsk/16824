@@ -37,7 +37,7 @@ def get_dataloaders(batch_size = 256):
 
 def preprocess_data(x):
     x = 2*x - 1
-    return x.to('cuda') #MY IMPLEMENTATION
+    return x.to('mps') #MY IMPLEMENTATION
 
 def avg_dict(all_metrics):
     keys = all_metrics[0].keys()
@@ -59,7 +59,7 @@ def save_samples(samples, fname, nrow=6, title='Samples'):
 def vis_samples(model, _file, num_samples = 49):
 
     with torch.no_grad():
-        z = torch.randn(num_samples, model.latent_size).to("cuda")
+        z = torch.randn(num_samples, model.latent_size).to("mps")
         samples = torch.clamp(model.decoder(z), -1, 1)
 
     samples = samples.cpu().permute(0, 2, 3, 1).numpy() * 0.5 + 0.5

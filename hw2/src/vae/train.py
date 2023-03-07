@@ -54,14 +54,14 @@ def vae_loss(model, x, beta = 1):
     
     #compute reconstruction loss
     recon_loss = torch.sum((x_pred - x)**2)
-    recon_loss = recon_loss/(1024*x.size(0))
+    recon_loss = recon_loss/(x.numel())
     
     #compute kl loss
     kl_loss = -0.5*torch.sum(1 + 2*log_std - mu**2 - std**2)
-    kl_loss = kl_loss/(1024*x.size(0))
+    #kl_loss = kl_loss/(x.numel())
     
     #compute total loss
-    total_loss = recon_loss + kl_loss
+    total_loss = recon_loss + beta*kl_loss
     
     # print("total = {}, recon = {}, kl = {}".format(total_loss.cpu().item(), \
     #                                             recon_loss.cpu().item(), \
@@ -129,7 +129,7 @@ def main(log_dir, loss_mode = 'vae', beta_mode = 'constant', num_epochs = 20, ba
     train_loader, val_loader = get_dataloaders()
 
     variational = True if loss_mode == 'vae' else False
-    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("cuda") #MY IMPLEMENTATION
+    model = AEModel(variational, latent_size, input_shape = (3, 32, 32)).to("mps") #MY IMPLEMENTATION
     optimizer = optim.Adam(model.parameters(), lr=lr)
 
     vis_x = next(iter(val_loader))[0][:36]
