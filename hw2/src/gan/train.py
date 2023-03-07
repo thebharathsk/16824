@@ -117,12 +117,12 @@ def train_model(
                 
                 #discriminator outputs
                 #true data
-                disc_out_true = disc(train_batch)
+                disc_out_real = disc(train_batch)
                 #fake data
                 disc_out_fake = disc(gen_out)
                 
                 #compute loss
-                discriminator_loss = None
+                discriminator_loss = disc_loss_fn(disc_out_real, disc_out_fake)
                 
                 # TODO: 1.5 Compute the interpolated batch and run the discriminator on it.
 
@@ -143,7 +143,7 @@ def train_model(
                     disc_out_fake = disc(gen_out)
                     
                     #compute loss
-                    generator_loss = None
+                    generator_loss = gen_loss_fn(disc_out_fake)
                     
                 optim_generator.zero_grad(set_to_none=True)
                 scaler.scale(generator_loss).backward()

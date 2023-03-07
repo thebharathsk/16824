@@ -16,14 +16,33 @@ def compute_discriminator_loss(
     TODO 1.3.1: Implement GAN loss for discriminator.
     Do not use discrim_interp, interp, lamb. They are placeholders for Q1.5.
     """
+    #for generated samples
+    #compute probability of real-ness
+    disc_prob_fake = torch.sigmoid(discrim_fake)
     
-    return loss
+    #compute discriminator loss
+    loss_fake = torch.log(1 - disc_prob_fake).mean()
+
+    #for true samples
+    #compute probability of real-ness
+    disc_prob_real = torch.sigmoid(discrim_real)
+    
+    #compute discriminator loss
+    loss_real = torch.log(disc_prob_real).mean()
+    
+    
+    return - loss_fake - loss_real
 
 
 def compute_generator_loss(discrim_fake):
     """
     TODO 1.3.1: Implement GAN loss for generator.
     """
+    #compute probability of real-ness
+    disc_prob = torch.sigmoid(discrim_fake)
+    
+    #compute generator loss
+    loss = torch.log(1 - disc_prob).mean()
     
     return loss
 
