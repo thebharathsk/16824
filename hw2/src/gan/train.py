@@ -38,9 +38,15 @@ def get_optimizers_and_schedulers(gen, disc):
     optim_discriminator = torch.optim.Adam(disc.parameters(), 0.0002, [0, 0.9])
     
     #generator scheduler
-    scheduler_generator = torch.optim.lr_scheduler.StepLR(optim_generator, step_size=200, gamma=0.9)
+    scheduler_generator = torch.optim.lr_scheduler.LinearLR(optimizer=optim_generator,
+                                                            start_factor=1,
+                                                            end_factor=0,
+                                                            total_iters=1e5)
     #generator discriminator
-    scheduler_discriminator = torch.optim.lr_scheduler.StepLR(optim_discriminator, step_size=1000, gamma=0.9)
+    scheduler_discriminator = torch.optim.lr_scheduler.LinearLR(optimizer=optim_discriminator,
+                                                            start_factor=1,
+                                                            end_factor=0,
+                                                            total_iters=5e5)
     
     return (
         optim_discriminator,
