@@ -16,7 +16,6 @@ def save_plot(x, y, xlabel, ylabel, title, filename):
 def get_fid(gen, dataset_name, dataset_resolution, z_dimension, batch_size, num_gen):
     gen_fn = lambda z: (gen.forward_given_samples(z) / 2 + 0.5) * 255
     score = fid.compute_fid(
-        fdir2='./cub_fid/'
         gen=gen_fn,
         dataset_name=dataset_name,
         dataset_res=dataset_resolution,
@@ -27,8 +26,6 @@ def get_fid(gen, dataset_name, dataset_resolution, z_dimension, batch_size, num_
         dataset_split="custom",
     )
     return score
-    return 0
-
 
 @torch.no_grad()
 def interpolate_latent_space(gen, path):

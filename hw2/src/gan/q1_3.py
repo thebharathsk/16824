@@ -30,7 +30,7 @@ def compute_discriminator_loss(
     #compute discriminator loss
     loss_real = torch.log(disc_prob_real).mean()
     
-    
+    #optimize over negative of loss
     return - loss_fake - loss_real
 
 

@@ -392,7 +392,7 @@ class Discriminator(torch.jit.ScriptModule):
                                     ResBlock(128, 3, 128),
                                     nn.ReLU()
                                     )
-        self.dense = nn.Linear(in_features=8192, out_features=1, bias=True)
+        self.dense = nn.Linear(in_features=128, out_features=1, bias=True)
 
     @torch.jit.script_method
     def forward(self, x):
@@ -406,8 +406,8 @@ class Discriminator(torch.jit.ScriptModule):
         #downscale
         x = self.layers(x)
         
-        #reshape
-        x = x.view(B, -1)
+        #sum
+        x = x.sum((2,3))
                 
         #regress 
         x = self.dense(x)

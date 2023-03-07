@@ -7,4 +7,5 @@ hw1/src/detection/mAP/input
 hw2/src/vae/data
 hw2/src/datasets
 runs/
+CUB_200_2011
 *.pyc
