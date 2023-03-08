@@ -54,16 +54,14 @@ def vae_loss(model, x, beta = 1):
     
     #compute reconstruction loss
     recon_loss = torch.sum((x_pred - x)**2)
+    recon_loss = recon_loss/x.size(0)
     
     #compute kl loss
     kl_loss = -0.5*torch.sum(1 + 2*log_std - mu**2 - std**2)
-    #kl_loss = kl_loss/(x.numel())
+    kl_loss = kl_loss/x.size(0)
     
     #compute total loss
     total_loss = recon_loss + beta*kl_loss
-    
-    #average
-    total_loss = total_loss/x.size(0)
     
     # print("total = {}, recon = {}, kl = {}".format(total_loss.cpu().item(), \
     #                                             recon_loss.cpu().item(), \
