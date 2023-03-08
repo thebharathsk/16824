@@ -127,11 +127,21 @@ def train_model(
                 #fake data
                 disc_out_fake = disc(gen_out)
                 
-                #compute loss
-                discriminator_loss = disc_loss_fn(disc_out_real, disc_out_fake)
                 
                 # TODO: 1.5 Compute the interpolated batch and run the discriminator on it.
-
+                #randomly generate epsilon
+                eps = torch.rand(1)
+                
+                #mix generated and real data
+                interp = eps*(gen_out) + (1-eps)*train_batch
+                
+                #get output from discriminator
+                discrim_interp = disc(interp)
+                
+                #compute loss
+                discriminator_loss = disc_loss_fn(disc_out_real, disc_out_fake, \
+                                                    discrim_interp, interp, lamb)                
+                
             optim_discriminator.zero_grad(set_to_none=True)
             scaler.scale(discriminator_loss).backward()
             scaler.step(optim_discriminator)
