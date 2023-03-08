@@ -130,10 +130,10 @@ def train_model(
                 
                 # TODO: 1.5 Compute the interpolated batch and run the discriminator on it.
                 #randomly generate epsilon
-                eps = torch.rand(1)
+                eps = torch.rand(1, device="cuda")
                 
                 #mix generated and real data
-                interp = eps*(gen_out) + (1-eps)*train_batch
+                interp = (eps*(gen_out) + (1-eps)*train_batch.cuda()).requires_grad_(True)
                 
                 #get output from discriminator
                 discrim_interp = disc(interp)

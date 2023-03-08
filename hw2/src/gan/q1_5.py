@@ -15,18 +15,28 @@ def compute_discriminator_loss(
     loss = E[D(fake_data)] - E[D(real_data)] + lambda * E[(|| grad wrt interpolated_data (D(interpolated_data))|| - 1)^2]
     """
     #first loss term
-    #apply sigmoid
-    discrim_fake_prob = torch.sigmoid(discrim_fake)
-    loss_fake = discrim_fake_prob.mean()
+    loss_fake = discrim_fake.mean()
     
     #second loss term
-    #apply sigmoid
-    discrim_real_prob = torch.sigmoid(discrim_real)
-    loss_real = -discrim_real_prob.mean()
+    loss_real = -discrim_real.mean()
     
     #third loss term
-    loss_grad = torch.autograd.grad(interp, discrim_interp, retain_graph=True)
-    loss_grad = (loss_grad).pow(2).mean()
+    #compute gradients of output w.r.t input
+    loss_grad = torch.autograd.grad(discrim_interp, interp,\
+                                    torch.ones_like(discrim_interp,\
+                                    device="cuda"),
+                                    create_graph=True,
+                                    retain_graph=True,
+                                    only_inputs=True,)[0] #BxCxHxW
+    
+    #reshape gradients
+    loss_grad = loss_grad.view(loss_grad.size(0), -1) #Bx-1
+    
+    #compute norm
+    loss_grad = torch.linalg.norm(loss_grad, dim=-1) #Bx1
+
+    #deviation of norm from 1
+    loss_grad = (loss_grad - 1).pow(2).mean() #1 => scalar
     
     loss = loss_fake + loss_real + lamb*loss_grad
     
@@ -36,12 +46,9 @@ def compute_generator_loss(discrim_fake):
     """
     TODO 1.5.1: Implement WGAN-GP loss for generator.
     loss = - E[D(fake_data)]
-    """
-    #apply sigmoid
-    discrim_fake_prob = torch.sigmoid(discrim_fake)
-    
+    """    
     #compute loss
-    loss = -discrim_fake_prob.mean()
+    loss = -discrim_fake.mean()
     
     return loss
 
