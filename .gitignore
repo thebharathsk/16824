@@ -4,8 +4,13 @@ hw1/src/data
 hw1/src/datasets
 hw1/src/detection/detection_logs
 hw1/src/detection/mAP/input
+
+#HW2
 hw2/src/vae/data
 hw2/src/datasets
 runs/
 CUB_200_2011
+hw2/src/diffusion/epoch_199.pth
+
+
 *.pyc
