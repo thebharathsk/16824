@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.13)  25 FEB 2023 12:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.13)  17 MAR 2023 05:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1132,8 +1132,20 @@ Package: subcaption 2022/01/07 v1.5 Sub-captions (AR)
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 244.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+) (./main.aux
+
+LaTeX Warning: Label `question@1' multiply defined.
+
+
+LaTeX Warning: Label `question@2' multiply defined.
+
+
+LaTeX Warning: Label `question@1' multiply defined.
+
+
+LaTeX Warning: Label `question@2' multiply defined.
+
 )
-No file main.aux.
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 244.
@@ -1154,6 +1166,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 244.
 LaTeX Font Info:    ... okay on input line 244.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 244.
 LaTeX Font Info:    ... okay on input line 244.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -1215,6 +1228,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 244.
 LaTeX Info: Redefining \pageref on input line 244.
 LaTeX Info: Redefining \nameref on input line 244.
+ (./main.out) (./main.out)
 \@outlinefile=\write7
 \openout7 = `main.out'.
 
@@ -1254,7 +1268,7 @@ Overfull \hbox (32.82553pt too wide) in paragraph at lines 283--284
 []\OT1/ptm/b/n/10.95 Deliverables: \OT1/ptm/m/n/10.95 The code will log plots to \OT1/pcr/m/n/10.95 gan/data[]gan\OT1/ptm/m/n/10.95 , \OT1/pcr/m/n/10.95 gan/data[]ls[]gan\OT1/ptm/m/n/10.95 , and \OT1/pcr/m/n/10.95 gan/data[]wgan[]gp\OT1/ptm/m/n/10.95 .
  []
 
-<examples/samples_30000.png, id=26, 343.2825pt x 343.2825pt>
+<examples/samples_30000.png, id=38, 343.2825pt x 343.2825pt>
 File: examples/samples_30000.png Graphic file (type png)
 <use examples/samples_30000.png>
 Package pdftex.def Info: examples/samples_30000.png  used on input line 294.
@@ -1262,7 +1276,7 @@ Package pdftex.def Info: examples/samples_30000.png  used on input line 294.
 [2
 
  <./examples/samples_30000.png (PNG copy)>]
-<example-image.pdf, id=33, 321.2pt x 240.9pt>
+<example-image.pdf, id=44, 321.2pt x 240.9pt>
 File: example-image.pdf Graphic file (type pdf)
 <use example-image.pdf>
 Package pdftex.def Info: example-image.pdf  used on input line 313.
@@ -1369,36 +1383,27 @@ This exam contains 7 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
 
-Class exam Warning: Point totals have changed. Rerun to get point totals right.
-
-
 AED: lastpage setting LastPage
 (./main.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  712E8154B3C89C6816E40955AB773CFD;697.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: 712E8154B3C89C6816E40955AB773CFD;697.
  ) 
 Here is how much of TeX's memory you used:
- 37339 strings out of 478268
- 750699 string characters out of 5846347
- 1111061 words of memory out of 5000000
- 54838 multiletter control sequences out of 15000+600000
- 492613 words of font info for 81 fonts, out of 8000000 for 9000
+ 37357 strings out of 478268
+ 750989 string characters out of 5846347
+ 1111578 words of memory out of 5000000
+ 54850 multiletter control sequences out of 15000+600000
+ 492927 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,81p,1249b,969s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,81p,1249b,967s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (7 pages, 376958 bytes).
+Output written on main.pdf (7 pages, 377581 bytes).
 PDF statistics:
- 144 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
+ 154 PDF objects out of 1000 (max. 8388607)
+ 122 compressed objects within 2 object streams
  27 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 47 words of extra memory for PDF output out of 10000 (max. 10000000)
 
