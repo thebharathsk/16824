@@ -32,9 +32,9 @@ class DiffusionModel(nn.Module):
         # TODO 3.1: compute the cumulative products for current and previous timesteps
         #MY IMPLEMENTATION
         self.alphas_cumprod = torch.cumprod(alphas, 0)
-        print(self.alphas_cumprod.shape)
-        self.alphas_cumprod_prev =  torch.roll(self.alphas_cumprod, 1)
-
+        self.alphas_cumprod_prev =  torch.zeros_like(self.alphas_cumprod)
+        self.alphas_cumprod_prev[1:] = self.alphas_cumprod[0:-1]        
+        
         # TODO 3.1: pre-compute values needed for forward process
         #MY IMPLEMENTATION
         # This is the coefficient of x_t when predicting x_0
@@ -52,7 +52,7 @@ class DiffusionModel(nn.Module):
         # TODO 3.1: compute posterior variance
         # calculations for posterior q(x_{t-1} | x_t, x_0) in DDPM
         #MY IMPLEMENTATION
-        self.posterior_variance = (((1-self.alphas_cumprod_prev)/(1-self.alphas_cumprod))*self.betas).pow(2)
+        self.posterior_variance = (((1-self.alphas_cumprod_prev)/(1-self.alphas_cumprod))*self.betas)
         self.posterior_log_variance_clipped = torch.log(
             self.posterior_variance.clamp(min =1e-20))
 
@@ -68,14 +68,17 @@ class DiffusionModel(nn.Module):
         # using the coefficients, x_t, and x_0
         # hint: can use extract function from utils.py
         #MY IMPLEMENTATION
+        #extract time
+        t_ = t[0]
+        
         #mean
-        posterior_mean = self.posterior_mean_coef1[t]*x_0 + self.posterior_mean_coef2[t]*x_t
+        posterior_mean = self.posterior_mean_coef1[t_]*x_0 + self.posterior_mean_coef2[t_]*x_t
         
         #variance
-        posterior_variance = self.posterior_variance[t]
+        posterior_variance = self.posterior_variance[t_]
         
         #log variance
-        posterior_log_variance_clipped = self.posterior_log_variance_clipped[t]
+        posterior_log_variance_clipped = self.posterior_log_variance_clipped[t_]
         
         return posterior_mean, posterior_variance, posterior_log_variance_clipped
 
@@ -86,14 +89,29 @@ class DiffusionModel(nn.Module):
         # clamp x_0 to [-1, 1]
         #MY IMPLEMENTATION
         #predict noise
+        print(x_t.size(), x_t[0].min(), x_t[0].max(), torch.abs(x_t[0]).mean())
+        print(t[0])
         pred_noise = self.model(x_t, t)
+        print(pred_noise.size(), pred_noise.min(), pred_noise.max(), torch.abs(pred_noise[0]).mean())
+        print('####')
+        
+        if t[0] == 900:
+            import sys
+            sys.exit()
+        
+        #extract time
+        t_ = t[0]
         
         #use extract function
-        pred_noise = extract(pred_noise, t, x_t.shape)
+        #pred_noise = extract(pred_noise, t, x_t.shape)
         
         #estimate x_0
-        x_0 = self.x_0_pred_coef_1[t]*x_t + \
-                self.x_0_pred_coef_2[t]*pred_noise
+        x_0 = x_t*self.x_0_pred_coef_1[t_] + \
+                pred_noise*self.x_0_pred_coef_2[t_]
+        
+        
+        #clamp x_0 
+        x_0 = torch.clamp(x_0, -1, 1)
         
         return (pred_noise, x_0)
 
@@ -109,7 +127,7 @@ class DiffusionModel(nn.Module):
         mu, var, _ = self.get_posterior_parameters(x_0, x, t)
         
         #estimate x_t-1
-        pred_img = mu + var*pred_noise
+        pred_img = mu + torch.sqrt(var)*pred_noise
         
         return pred_img, x_0
 
