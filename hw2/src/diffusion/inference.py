@@ -10,9 +10,14 @@ from cleanfid import fid as cleanfid
 @torch.no_grad()
 def get_fid(gen, dataset_name, dataset_resolution, z_dimension, batch_size, num_gen):
     # TODO 3.3: Write a function that samples images from the diffusion model given z
+    #MY IMPLEMENTATION
+    def gen_fn(z):
+        s = (batch_size, 3, dataset_resolution, dataset_resolution)
+        return 255*gen.sample_given_z(z, s)
+    
     # NOTE: the output must be [0, 255]
     score = cleanfid.compute_fid(
-        gen=gen,
+        gen=gen_fn,
         dataset_name=dataset_name,
         dataset_res=dataset_resolution,
         num_gen=num_gen,
@@ -31,7 +36,7 @@ if __name__ == "__main__":
     parser.add_argument('--sampling-method', choices=['ddpm', 'ddim'])
     parser.add_argument('--ddim-timesteps', type=int, default=25, help="Number of timesteps to sample for DDIM")
     parser.add_argument('--ddim-eta', type=int, default=1, help="Eta for DDIM")
-    parser.add_argument('--compute-fid', action="store_true")
+    parser.add_argument('--compute_fid', action="store_true")
     args = parser.parse_args()
 
     prefix = f"data_{args.sampling_method}/"
