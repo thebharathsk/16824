@@ -43,9 +43,15 @@ def interpolate_latent_space(gen, path):
     #copy vectors
     z[1:,2:] = z[0,2:]
     
-    #interpolate first two dimensions
-    z[:,0] = torch.linspace(-1, 1, 100)
-    z[:,1] = torch.linspace(-1, 1, 100)
+    #create an array holding variation in z
+    z_var = torch.linspace(-1, 1, 10)
+    
+    #create an array
+    x, y = torch.meshgrid(z_var, z_var)    
+    
+    #change first two dimensions
+    z[:,0] = x.flatten()
+    z[:,1] = y.flatten()
     
     #generate the images
     gen_images = gen.forward_given_samples(z.cuda())
