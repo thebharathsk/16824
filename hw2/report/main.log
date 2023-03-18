@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.13)  17 MAR 2023 06:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.13)  18 MAR 2023 01:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1276,60 +1276,65 @@ Package pdftex.def Info: examples/samples_30000.png  used on input line 294.
 [2
 
  <./examples/samples_30000.png (PNG copy)>]
-<example-image.pdf, id=44, 321.2pt x 240.9pt>
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 313.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 317.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 327.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 331.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 341.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 345.
-(pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
- [3 </usr/local/texlive/2022/texmf-dist/tex/latex/mwe/example-image.pdf>] [4
+<./results/gan/new_results/data_gan/samples_30000.png, id=44, 343.2825pt x 340.27126pt>
+File: ./results/gan/new_results/data_gan/samples_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_gan/samples_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_gan/samples_30000.png  used on input line 313.
+(pdftex.def)             Requested size: 120.26048pt x 119.20056pt.
+<./results/gan/new_results/data_gan/interpolations_30000.png, id=45, 343.2825pt x 343.2825pt>
+File: ./results/gan/new_results/data_gan/interpolations_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_gan/interpolations_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_gan/interpolations_30000.png  used on input line 317.
+(pdftex.def)             Requested size: 120.26048pt x 120.25543pt.
+<./results/gan/new_results/data_ls_gan/samples_30000.png, id=46, 343.2825pt x 341.275pt>
+File: ./results/gan/new_results/data_ls_gan/samples_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_ls_gan/samples_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_ls_gan/samples_30000.png  used on input line 327.
+(pdftex.def)             Requested size: 120.26048pt x 119.55219pt.
+<./results/gan/new_results/data_ls_gan/interpolations_30000.png, id=47, 343.2825pt x 343.2825pt>
+File: ./results/gan/new_results/data_ls_gan/interpolations_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_ls_gan/interpolations_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_ls_gan/interpolations_30000.png  used on input line 331.
+(pdftex.def)             Requested size: 120.26048pt x 120.25543pt.
+<./results/gan/new_results/data_wgan_gp/samples_30000.png, id=48, 343.2825pt x 341.275pt>
+File: ./results/gan/new_results/data_wgan_gp/samples_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_wgan_gp/samples_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_wgan_gp/samples_30000.png  used on input line 341.
+(pdftex.def)             Requested size: 120.26048pt x 119.55219pt.
+<./results/gan/new_results/data_wgan_gp/interpolations_30000.png, id=49, 343.2825pt x 343.2825pt>
+File: ./results/gan/new_results/data_wgan_gp/interpolations_30000.png Graphic file (type png)
+<use ./results/gan/new_results/data_wgan_gp/interpolations_30000.png>
+Package pdftex.def Info: ./results/gan/new_results/data_wgan_gp/interpolations_30000.png  used on input line 345.
+(pdftex.def)             Requested size: 120.26048pt x 120.25543pt.
+ [3 <./results/gan/new_results/data_gan/samples_30000.png (PNG copy)> <./results/gan/new_results/data_gan/interpolations_30000.png (PNG copy)> <./results/gan/new_results/data_ls_gan/samples_30000.png (PNG copy)> <./results/gan/new_results/data_ls_gan/interpolations_30000.png (PNG copy)> <./results/gan/new_results/data_wgan_gp/samples_30000.png (PNG copy)> <./results/gan/new_results/data_wgan_gp/interpolations_30000.png (PNG copy)>] [4
 
 ]
-<./results/vae/ae_latent16/recon_loss_vs_iterations.png, id=71, 462.528pt x 346.896pt>
+<./results/vae/ae_latent16/recon_loss_vs_iterations.png, id=70, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent16/recon_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/ae_latent16/recon_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/ae_latent16/recon_loss_vs_iterations.png  used on input line 379.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/ae_latent128/recon_loss_vs_iterations.png, id=73, 462.528pt x 346.896pt>
+<./results/vae/ae_latent128/recon_loss_vs_iterations.png, id=72, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent128/recon_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/ae_latent128/recon_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/ae_latent128/recon_loss_vs_iterations.png  used on input line 383.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/ae_latent1024/recon_loss_vs_iterations.png, id=74, 462.528pt x 346.896pt>
+<./results/vae/ae_latent1024/recon_loss_vs_iterations.png, id=73, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent1024/recon_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/ae_latent1024/recon_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/ae_latent1024/recon_loss_vs_iterations.png  used on input line 387.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/ae_latent16/epoch_19_recons.png, id=75, 462.528pt x 346.896pt>
+<./results/vae/ae_latent16/epoch_19_recons.png, id=74, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent16/epoch_19_recons.png Graphic file (type png)
 <use ./results/vae/ae_latent16/epoch_19_recons.png>
 Package pdftex.def Info: ./results/vae/ae_latent16/epoch_19_recons.png  used on input line 391.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/ae_latent128/epoch_19_recons.png, id=76, 462.528pt x 346.896pt>
+<./results/vae/ae_latent128/epoch_19_recons.png, id=75, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent128/epoch_19_recons.png Graphic file (type png)
 <use ./results/vae/ae_latent128/epoch_19_recons.png>
 Package pdftex.def Info: ./results/vae/ae_latent128/epoch_19_recons.png  used on input line 395.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/ae_latent1024/epoch_19_recons.png, id=77, 462.528pt x 346.896pt>
+<./results/vae/ae_latent1024/epoch_19_recons.png, id=76, 462.528pt x 346.896pt>
 File: ./results/vae/ae_latent1024/epoch_19_recons.png Graphic file (type png)
 <use ./results/vae/ae_latent1024/epoch_19_recons.png>
 Package pdftex.def Info: ./results/vae/ae_latent1024/epoch_19_recons.png  used on input line 399.
@@ -1339,32 +1344,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 374--402
 
  []
 
-<./results/vae/vae_latent_beta_.8/recon_loss_vs_iterations.png, id=78, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_.8/recon_loss_vs_iterations.png, id=77, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_.8/recon_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_.8/recon_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_.8/recon_loss_vs_iterations.png  used on input line 408.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/vae_latent_beta_.8/kl_loss_vs_iterations.png, id=79, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_.8/kl_loss_vs_iterations.png, id=78, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_.8/kl_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_.8/kl_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_.8/kl_loss_vs_iterations.png  used on input line 412.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/vae_latent_beta_.8/epoch_19_samples.png, id=80, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_.8/epoch_19_samples.png, id=79, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_.8/epoch_19_samples.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_.8/epoch_19_samples.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_.8/epoch_19_samples.png  used on input line 416.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/vae_latent_beta_annealing/recon_loss_vs_iterations.png, id=81, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_annealing/recon_loss_vs_iterations.png, id=80, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_annealing/recon_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_annealing/recon_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_annealing/recon_loss_vs_iterations.png  used on input line 421.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/vae_latent_beta_annealing/kl_loss_vs_iterations.png, id=82, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_annealing/kl_loss_vs_iterations.png, id=81, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_annealing/kl_loss_vs_iterations.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_annealing/kl_loss_vs_iterations.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_annealing/kl_loss_vs_iterations.png  used on input line 425.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-<./results/vae/vae_latent_beta_annealing/epoch_19_samples.png, id=83, 462.528pt x 346.896pt>
+<./results/vae/vae_latent_beta_annealing/epoch_19_samples.png, id=82, 462.528pt x 346.896pt>
 File: ./results/vae/vae_latent_beta_annealing/epoch_19_samples.png Graphic file (type png)
 <use ./results/vae/vae_latent_beta_annealing/epoch_19_samples.png>
 Package pdftex.def Info: ./results/vae/vae_latent_beta_annealing/epoch_19_samples.png  used on input line 429.
@@ -1379,12 +1384,12 @@ Overfull \hbox (53.75851pt too wide) in paragraph at lines 439--440
 []\OT1/ptm/b/n/10.95 Setup: \OT1/ptm/m/n/10.95 Down-load our pre-trained check-point for DDPM from [][]https://drive.google.com/file/d/1gtn9Jv9jBUol7iJw-
  []
 
-<./results/diffusion/data_ddpm/samples_ddpm.png, id=109, 343.2825pt x 343.2825pt>
+<./results/diffusion/data_ddpm/samples_ddpm.png, id=108, 343.2825pt x 343.2825pt>
 File: ./results/diffusion/data_ddpm/samples_ddpm.png Graphic file (type png)
 <use ./results/diffusion/data_ddpm/samples_ddpm.png>
 Package pdftex.def Info: ./results/diffusion/data_ddpm/samples_ddpm.png  used on input line 452.
 (pdftex.def)             Requested size: 150.32504pt x 150.3219pt.
-<./results/diffusion/data_ddim/samples_ddim.png, id=110, 343.2825pt x 343.2825pt>
+<./results/diffusion/data_ddim/samples_ddim.png, id=109, 343.2825pt x 343.2825pt>
 File: ./results/diffusion/data_ddim/samples_ddim.png Graphic file (type png)
 <use ./results/diffusion/data_ddim/samples_ddim.png>
 Package pdftex.def Info: ./results/diffusion/data_ddim/samples_ddim.png  used on input line 456.
@@ -1406,18 +1411,18 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 712E8154B3C89C6816E40955AB773CFD;697.
  ) 
 Here is how much of TeX's memory you used:
- 37454 strings out of 478268
- 756353 string characters out of 5846347
+ 37484 strings out of 478268
+ 758532 string characters out of 5846347
  1111578 words of memory out of 5000000
- 54934 multiletter control sequences out of 15000+600000
+ 54961 multiletter control sequences out of 15000+600000
  492927 words of font info for 82 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,10n,81p,1249b,967s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmss17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (7 pages, 2155278 bytes).
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (7 pages, 3785343 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 123 compressed objects within 2 object streams
+ 179 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
  27 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 142 words of extra memory for PDF output out of 10000 (max. 10000000)
 
