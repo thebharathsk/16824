@@ -1,0 +1,405 @@
+\documentclass[11pt,addpoints,answers]{exam}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{titling}
+\usepackage{url}
+\usepackage{xfrac}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{paralist}
+\usepackage{epstopdf}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{fancyvrb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{float}
+\usepackage{paralist}
+\usepackage[svgname]{xcolor}
+\usepackage{enumerate}
+\usepackage{array}
+\usepackage{times}
+\usepackage{url}
+\usepackage{comment}
+\usepackage{environ}
+\usepackage{times}
+\usepackage{textcomp}
+\usepackage{caption}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{listings}
+\usepackage{parskip} % For NIPS style paragraphs.
+\usepackage[compact]{titlesec} % Less whitespace around titles
+\usepackage[inline]{enumitem} % For inline enumerate* and itemize*
+\usepackage{datetime}
+\usepackage{comment}
+% \usepackage{minted}
+\usepackage{lastpage}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,bayesnet}
+%\usepackage{framed}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cprotect}
+\usepackage{xcolor}
+\usepackage{verbatimbox}
+\usepackage[many]{tcolorbox}
+\usepackage{cancel}
+\usepackage{wasysym}
+\usepackage{mdframed}
+\usepackage{subcaption}
+\usetikzlibrary{shapes.geometric}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatting for \CorrectChoice of "exam" %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\CorrectChoiceEmphasis{}
+\checkedchar{\blackcircle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Better numbering                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Common Math Commands                    %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{mathabbreviations.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Code highlighting with listings         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+\definecolor{light-gray}{gray}{0.95}
+
+\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinelanguage{Shell}{
+  keywords={tar, cd, make},
+  %keywordstyle=\color{bluekeywords}\bfseries,
+  alsoletter={+},
+  ndkeywords={python, py, javac, java, gcc, c, g++, cpp, .txt, octave, m, .tar},
+  %ndkeywordstyle=\color{bluekeywords}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]",
+  backgroundcolor = \color{light-gray}
+}
+
+\lstset{columns=fixed, basicstyle=\ttfamily,
+    backgroundcolor=\color{light-gray},xleftmargin=0.5cm,frame=tlbr,framesep=4pt,framerule=0pt}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom box for highlights               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define box and box title style
+\tikzstyle{mybox} = [fill=blue!10, very thick,
+    rectangle, rounded corners, inner sep=1em, inner ysep=1em]
+
+% \newcommand{\notebox}[1]{
+% \begin{tikzpicture}
+% \node [mybox] (box){%
+%     \begin{minipage}{\textwidth}
+%     #1
+%     \end{minipage}
+% };
+% \end{tikzpicture}%
+% }
+
+\NewEnviron{notebox}{
+\begin{tikzpicture}
+\node [mybox] (box){
+    \begin{minipage}{\textwidth}
+        \BODY
+    \end{minipage}
+};
+\end{tikzpicture}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands showing / hiding solutions     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% To HIDE SOLUTIONS (to post at the website for students), set this value to 0: \def\issoln{0}
+\def\issoln{0}
+% Some commands to allow solutions to be embedded in the assignment file.
+\ifcsname issoln\endcsname \else \def\issoln{0} \fi
+% Default to an empty solutions environ.
+\NewEnviron{soln}{}{}
+% Default to an empty qauthor environ.
+\NewEnviron{qauthor}{}{}
+% Default to visible (but empty) solution box.
+\newtcolorbox[]{studentsolution}[1][]{%
+    breakable,
+    enhanced,
+    colback=white,
+    title=Solution,
+    #1
+}
+
+\if\issoln 1
+% Otherwise, include solutions as below.
+\RenewEnviron{soln}{
+    \leavevmode\color{red}\ignorespaces
+    \textbf{Solution} \BODY
+}{}
+\fi
+
+\if\issoln 1
+% Otherwise, include solutions as below.
+\RenewEnviron{solution}{}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands for customizing the assignment %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\courseNum}{\href{https://visual-learning.cs.cmu.edu/}{16824}}
+\newcommand{\courseName}{\href{https://visual-learning.cs.cmu.edu/}{Visual Learning and Recognition}}
+\newcommand{\courseSem}{\href{https://visual-learning.cs.cmu.edu/}{Spring 2023}}
+\newcommand{\courseUrl}{\url{https://piazza.com/class/lcy4ow5l5xp2fl}}
+\newcommand{\hwNum}{Homework 3}
+\newcommand{\hwTopic}{Transformers}
+\newcommand{\hwName}{\hwNum: \hwTopic}
+\newcommand{\outDate}{Sun, 19th March 2023}
+\newcommand{\dueDate}{Mon, 3rd April 2023}
+\newcommand{\instructorName}{Deepak Pathak}
+\newcommand{\taNames}{Ananye Agarwal, Rohan Choudhury, Murtaza Dalal, Russell Mendonca}
+
+%\pagestyle{fancyplain}
+\lhead{\hwName}
+\rhead{\courseNum}
+\cfoot{\thepage{} of \numpages{}}
+
+\title{\textsc{\hwName}} % Title
+
+
+\author{}
+
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Useful commands for typesetting the questions %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand \expect {\mathbb{E}}
+\newcommand \mle [1]{{\hat #1}^{\rm MLE}}
+\newcommand \map [1]{{\hat #1}^{\rm MAP}}
+\newcommand \argmax {\operatorname*{argmax}}
+\newcommand \argmin {\operatorname*{argmin}}
+\newcommand \code [1]{{\tt #1}}
+\newcommand \datacount [1]{\#\{#1\}}
+\newcommand \ind [1]{\mathbb{I}\{#1\}}
+
+\newcommand{\blackcircle}{\tikz\draw[black,fill=black] (0,0) circle (1ex);}
+\renewcommand{\circle}{\tikz\draw[black] (0,0) circle (1ex);}
+
+\newcommand{\pts}[1]{\textbf{[#1 pts]}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document configuration %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't display a date in the title and remove the white space
+\predate{}
+\postdate{}
+\date{}
+
+%%%%%%%%%%%%%%%%%%
+% Begin Document %
+%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+\section*{}
+\begin{center}
+  \textsc{\LARGE \hwNum} \\
+%   \textsc{\LARGE \hwTopic\footnote{Compiled on \today{} at \currenttime{}}} \\
+  \vspace{1em}
+  \textsc{\large \courseNum{} \courseName{} (\courseSem)} \\
+  %\vspace{0.25em}
+  \courseUrl\\
+  \vspace{1em}
+  RELEASED: \outDate \\
+  DUE: \dueDate \\
+  Instructor: \instructorName \\
+  TAs: \taNames
+\end{center}
+
+\section*{START HERE: Instructions}
+\begin{itemize}
+\item \textbf{Collaboration policy:} All are encouraged to work together BUT you must do your own work (code and write up). If you work with someone, please include their name in your write-up and cite any code that has been discussed. If we find highly identical write-ups or code or lack of proper accreditation of collaborators, we will take action according to strict university policies. See the \href{hhttps://www.cmu.edu/policies/student-and-student-life/academic-integrity.html}{Academic Integrity Section} detailed in the initial lecture for more information.
+
+\item\textbf{Late Submission Policy:} There are a \textbf{total of 7} late days across all homework submissions. Submissions more than 7 days after the deadline will receive a 0.
+
+\item\textbf{Submitting your work:}
+
+\begin{itemize}
+
+\item We will be using Gradescope (\url{https://gradescope.com/}) to submit the Problem Sets. Please use the provided template only. Submissions must be written in LaTeX. All submissions not adhering to the template will not be graded and receive a zero. 
+\item \textbf{Deliverables:} Please submit all the \texttt{.py} files. Add all relevant plots and text answers in the boxes provided in this file. TO include plots you can simply modify the already provided latex code. Submit the compiled \texttt{.pdf} report as well.
+\end{itemize}
+\end{itemize}
+\emph{NOTE: Partial points will be given for implementing parts of the homework even if you don't get the mentioned numbers as long as you include partial results in this pdf.}
+\clearpage
+
+\section{Image Captioning with Transformers (70 points)}
+
+
+
+We will be implementing the different pieces of a Transformer decoder (\href{https://arxiv.org/pdf/1706.03762.pdf}{Transformers}), and train it for image captioning on a subset of the \href{https://cocodataset.org/#home}{COCO dataset}. 
+\begin{itemize}
+    \item \textbf{Setup:} Run the following command to extract COCO data, in the \texttt{transformer\_captioning/datasets} folder : \texttt{./get\_coco\_captioning.sh}
+    %: \\ 
+    % \texttt{get_coco_captioningsh}
+\item \textbf{Question:} Follow the instructions in the \texttt{README.md} file in the \texttt{transformer\_captioning} folder to complete the implementation of the transformer decoder.
+\item \textbf{Deliverables:} After implementing all parts, use run.py for training the full model. The code will log plots to \texttt{plots}. Extract plots and paste them into the appropriate section below. 
+
+\item \textbf{Expected results:}
+    These are expected training losses after 100 epochs. Do not change the seed in run.py.
+    \begin{itemize}
+        \item 2-heads, 2-layers, lr 1e-4: Final loss $\leq$ 1 
+        \item 4-heads, 6-layers, lr 1e-4: Final loss $\leq$ 0.3 
+        \item 4-heads, 6-layers, lr 1e-3: Final loss $\leq$ 0.05
+    \end{itemize}
+\end{itemize}
+
+\begin{questions}
+\question Paste training loss plots for each of the three hyper-param configs
+\\
+2-heads-2-layers-lr-1e-4: \textbf{TODO: fill in final train loss here.} \\
+4-heads-6-layers-lr-1e-4: \textbf{TODO: fill in final train loss here.} \\
+4-heads-6-layers-lr-1e-3: \textbf{TODO: fill in final train loss here.} 
+\begin{figure}[H]
+    \centering
+    % TODO: put your plot here.
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{2-heads-2-layers-lre-4}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{4-heads-6-layers-lre-4}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{4-heads-6-layers-lre-3}
+    \end{subfigure}
+    
+\end{figure}
+\question Paste any three generated captioning samples from the training set. The provided code creates these plots at the end of training.
+\\
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Sample1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Sample2}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Sample3}
+    \end{subfigure}
+\end{figure}
+%\question 
+% What would you change in the training procedure to get better validation performance? : \\ \textbf{TODO: answer.} 
+
+\end{questions}
+\clearpage
+
+\section{Classification with Vision Transformers (30 points)}
+
+
+
+We will use the transformer you implemented in the previous part to implement a Vision Transformer (\href{https://arxiv.org/abs/2010.11929}{ViT}), for classification on CIFAR10. 
+
+\begin{itemize}
+    \item \textbf{Question:} Follow the instructions in the \texttt{README.md} file in the \texttt{vit\_classification} folder. You are encouraged to resuse code from the previous question. 
+    \item \textbf{Deliverables:} Run training using \texttt{run.py} for training the full model. The code will log plots \texttt{acc\_out.png} (train and test accuracy) and \texttt{loss\_out.png} (train loss). 
+    \item \textbf{Expected Results:} After 100 epochs, test accuracy should be $\approx 68\%$, train accuracy should be $\approx 100\%$, and training loss $\approx 0.25$. 
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Train/test accuracy}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.32\linewidth}
+        \includegraphics[width=\linewidth]{example-image}
+        \caption{Training loss}
+    \end{subfigure}
+\end{figure}
+
+\clearpage
+
+\textbf{Collaboration Survey} Please answer the following:
+
+\begin{enumerate}
+    \item Did you receive any help whatsoever from anyone in solving this assignment?
+    \begin{checkboxes}
+     \choice Yes
+     \choice No
+    \end{checkboxes}
+    \begin{itemize}
+        \item If you answered `Yes', give full details:
+        \item (e.g. “Jane Doe explained to me what is asked in Question 3.4”)
+    \end{itemize}
+
+    \begin{tcolorbox}[fit,height=3cm,blank, borderline={1pt}{-2pt},nobeforeafter]
+    %Input your solution here.  Do not change any of the specifications of this solution box.
+    \end{tcolorbox}
+
+    \item Did you give any help whatsoever to anyone in solving this assignment?
+    \begin{checkboxes}
+     \choice Yes
+     \choice No\
+    \end{checkboxes}
+    \begin{itemize}
+        \item If you answered `Yes', give full details:
+        \item (e.g. “I pointed Joe Smith to section 2.3 since he didn’t know how to proceed with Question 2”)
+    \end{itemize}
+
+    \begin{tcolorbox}[fit,height=3cm,blank, borderline={1pt}{-2pt},nobeforeafter]
+    %Input your solution here.  Do not change any of the specifications of this solution box.
+    \end{tcolorbox}
+
+    \item Note that copying code or writeup even from a collaborator or anywhere on the internet violates the \href{hhttps://www.cmu.edu/policies/student-and-student-life/academic-integrity.html}{Academic Integrity Code of Conduct}.
+\end{enumerate}
+
+\end{document}
