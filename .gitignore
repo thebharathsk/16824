@@ -12,5 +12,7 @@ runs/
 CUB_200_2011
 hw2/src/diffusion/epoch_199.pth
 
+#HW3
+hw3/src/transformer_captioning/datasets/coco_captioning
 
 *.pyc
