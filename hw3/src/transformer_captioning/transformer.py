@@ -31,7 +31,7 @@ class AttentionLayer(nn.Module):
     
         #project query, key and value  - 
         query = self.query_proj(query) #NxSxD
-        key = self.key_proj(key) #NxSxD
+        key = self.key_proj(key) #NxTxD
         value = self.value_proj(value) #NxTxD
 
         #compute dot-product attention. Don't forget the scaling value!
@@ -50,16 +50,16 @@ class AttentionLayer(nn.Module):
 
         # apply softmax, dropout, and use value
         #apply scaling
-        dot_product = dot_product/torch.sqrt(self.embed_dim) #NxSxT
+        dot_product = dot_product/math.sqrt(self.embed_dim) #NxSxT
         
         #apply softmax
-        y = F.softmax(dot_product, dim=1) #NxT
+        y = F.softmax(dot_product, dim=1) #NxSxT
         
         #apply dropout
-        y = self.dropout(y) #NxT
+        y = self.dropout(y) #NxSxT
         
         #multiply values
-        output = y*value
+        output = torch.matmul(y, value) #NxSxD
         
         return output  
 
@@ -81,17 +81,18 @@ class MultiHeadAttentionLayer(AttentionLayer):
 
         # TODO : Compute multi-head attention
         #MY IMPLEMENTATION
+        print('MHA')
         
         #project query, key and value
         query = self.query_proj(query) #NxSxD
-        key = self.key_proj(key) #NxSxD
+        key = self.key_proj(key) #NxTxD
         value = self.value_proj(value) #NxTxD
         
         #after projection, split the embedding across num_heads
         #eg - expected shape for value is (N, H, T, D/H)
-        query = query.view(N, H, S, D//H) #NxHxSxD//H
-        key = key.view(N, H, S, D//H) #NxHxSxD//H
-        value = value.view(N, H, T, D//H) #NxHxTxD//H
+        query = query.view(N, S, H, D//H).permute(0, 2, 1, 3) #NxHxSxD//H
+        key = key.view(N, T, H, D//H).permute(0, 2, 1, 3) #NxHxTxD//H
+        value = value.view(N, T, H, D//H).permute(0, 2, 1, 3) #NxHxTxD//H
         
         #compute dot-product attention separately for each head. Don't forget the scaling value!
         #Expected shape of dot_product is (N, H, S, T)
@@ -104,25 +105,28 @@ class MultiHeadAttentionLayer(AttentionLayer):
             additive_mask = attn_mask #SxT
             additive_mask[additive_mask == 0] = -torch.inf 
             additive_mask[additive_mask == 1] = 0
-            dot_product += torch.unsqueeze(additive_mask, (0, 1)) #NxHxSxT
+            dot_product += additive_mask.unsqueeze(0).unsqueeze(1) #NxHxSxT
         
         #apply scaling
-        dot_product = dot_product/torch.sqrt(D/H) #NxHxSxT
+        dot_product = dot_product/math.sqrt(D/H) #NxHxSxT
         
         # apply softmax, dropout, and use value
-        y = F.softmax(dot_product, dim=2) #NxHxT
+        y = F.softmax(dot_product, dim=3) #NxHxSXT
+        
         #apply dropout
-        y = self.dropout(y)
+        y = self.dropout(y) #NxHxSXT
         
         #multiple values
-        y = y*value #NxHxTxD/H
+        y = torch.matmul(y, value) #NxHxSxD/H
         
         # concat embeddings from different heads, and project
         #concatenate
-        y = y.permute(0, 2, 1, 3).view(N, T, -1) #NxTxD
+        y = y.permute(0, 2, 1, 3)
+        y = y.reshape(N, S, D) #NxSxD
         
         #project
-        output = self.head_proj(y) #NxTxD
+        output = self.head_proj(y) #NxSxD
+        
         
         return output
 
@@ -130,6 +134,7 @@ class MultiHeadAttentionLayer(AttentionLayer):
 class PositionalEncoding(nn.Module):
     def __init__(self, embed_dim, dropout=0.1, max_len=5000):
         super().__init__()
+        #MY IMPLEMENTATION
         # TODO - use torch.nn.Embedding to create the encoding. Initialize dropout layer.
         self.encoding = nn.Embedding(max_len, embed_dim) 
         self.dropout = nn.Dropout(dropout)
@@ -139,15 +144,15 @@ class PositionalEncoding(nn.Module):
         # TODO - add the encoding to x
         #MY IMPLEMENTATION
         #indices
-        idx = torch.arange(0, S).unsqueeze(0) #1xS
-        idx = torch.cat([idx]*N, dim=1).long() #NxS
+        idx = torch.arange(0, S, device=x.device).unsqueeze(0) #1xS
+        idx = torch.cat([idx]*N, dim=0).long() #NxS
         
         #get and add encodings
-        enc_weights = self.encoding(idx)
+        enc_weights = self.encoding(idx) #NxSxD
         
-        output = x + enc_weights
+        output = x + enc_weights #NxSxD
         
-        output = self.dropout(output)
+        output = self.dropout(output) #NxSxD
    
         return output
 
@@ -192,13 +197,13 @@ class CrossAttentionBlock(nn.Module):
         # Then add a residual connection to the original input, and finally apply normalization. #############################
         #MY IMPLEMENTATION
         #attention
-        y = self.cross_attn(seq, seq, cond)
+        y = self.cross_attn(cond, seq, seq)
         
         #dropout
         y = self.dropout(y)
         
         #residual connection and normalization
-        out = self.layernorm(seq + y)
+        out = self.norm(seq + y)
                 
         return out
 
@@ -214,7 +219,6 @@ class FeedForwardBlock(nn.Module):
                                  nn.Linear(dim_feedforward, input_dim))
         self.dropout = nn.Dropout(dropout)
         self.norm = nn.LayerNorm(input_dim)
-       
 
     def forward(self, seq):
          ############# TODO - MLP on the sequence. Add dropout to mlp layer output.
@@ -240,7 +244,9 @@ class DecoderLayer(nn.Module):
 
     def forward(self, seq, cond, mask):
         out = self.self_atn_block(seq, mask)
+        print(out[0,0,0], out.mean())
         out = self.cross_atn_block(out, cond)
+        print(out[0,0,0], out.mean())
         return self.feedforward_block(out)
        
 class TransformerDecoder(nn.Module):
@@ -303,7 +309,7 @@ class TransformerDecoder(nn.Module):
         # to predict the ith element of the sequence.
         #MY IMPLEMENTATION
         #create mask
-        mask = torch.zeros(_len).to(self.device)
+        mask = torch.zeros((_len, _len)).to(self.device)
         
         #create meshgrid
         x = torch.arange(0, _len)
@@ -330,10 +336,15 @@ class TransformerDecoder(nn.Module):
         mask.to(captions_embed.dtype)
         
         output = captions_embed
-        for layer in self.layers:
+        print(output[0,0,0])
+        for i, layer in enumerate(self.layers):
+            print('layer = ', i+1)
+            
             output = layer(output, features_embed, mask=mask)
 
         scores = self.score_projection(output)
+        
+        
         return scores
 
     def _init_weights(self, module):
@@ -383,5 +394,3 @@ class TransformerDecoder(nn.Module):
                 partial_caption = torch.cat([partial_caption, word], dim=1)
 
             return captions
-
-

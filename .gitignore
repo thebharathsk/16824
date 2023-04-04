@@ -14,5 +14,5 @@ hw2/src/diffusion/epoch_199.pth
 
 #HW3
 hw3/src/transformer_captioning/datasets/coco_captioning
-
+hw3/src/transformer_captioning/plots
 *.pyc
