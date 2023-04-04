@@ -81,7 +81,6 @@ class MultiHeadAttentionLayer(AttentionLayer):
 
         # TODO : Compute multi-head attention
         #MY IMPLEMENTATION
-        print('MHA')
         
         #project query, key and value
         query = self.query_proj(query) #NxSxD
@@ -102,7 +101,7 @@ class MultiHeadAttentionLayer(AttentionLayer):
             # convert att_mask which is multiplicative, to an additive mask
             # Hint : If mask[i,j] = 0, we want softmax(QKT[i,j] + additive_mask[i,j]) to be 0
             # Think about what inputs make softmax 0.
-            additive_mask = attn_mask #SxT
+            additive_mask = copy.deepcopy(attn_mask) #SxT
             additive_mask[additive_mask == 0] = -torch.inf 
             additive_mask[additive_mask == 1] = 0
             dot_product += additive_mask.unsqueeze(0).unsqueeze(1) #NxHxSxT
@@ -242,12 +241,14 @@ class DecoderLayer(nn.Module):
         self.cross_atn_block = CrossAttentionBlock(input_dim, num_heads, dropout)
         self.feedforward_block = FeedForwardBlock(input_dim, num_heads, dim_feedforward, dropout)
 
-    def forward(self, seq, cond, mask):
+    def forward(self, seq, cond, mask):        
         out = self.self_atn_block(seq, mask)
-        print(out[0,0,0], out.mean())
+        
         out = self.cross_atn_block(out, cond)
-        print(out[0,0,0], out.mean())
-        return self.feedforward_block(out)
+        
+        out = self.feedforward_block(out)
+        
+        return out
        
 class TransformerDecoder(nn.Module):
     def __init__(self, word_to_idx, idx_to_word, input_dim, embed_dim, num_heads=4,
@@ -336,10 +337,7 @@ class TransformerDecoder(nn.Module):
         mask.to(captions_embed.dtype)
         
         output = captions_embed
-        print(output[0,0,0])
-        for i, layer in enumerate(self.layers):
-            print('layer = ', i+1)
-            
+        for layer in self.layers:
             output = layer(output, features_embed, mask=mask)
 
         scores = self.score_projection(output)

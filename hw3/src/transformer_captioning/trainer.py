@@ -31,14 +31,11 @@ class Trainer(object):
         #predict loss
         predictions = predictions.permute(0, 2, 1)
         loss = self.loss_fn(predictions, labels)
-                
-        import sys
-        sys.exit()
-        
+
         #mask
         mask = labels != self.model._null
         loss = loss*mask
-        
+                
         #average loss
         loss = loss.mean()
                 
