@@ -15,9 +15,9 @@ class AttentionLayer(nn.Module):
         # TODO: Initialize the following layers and parameters to perform attention
         # This class assumes that the input dimension for query, key and value is embed_dim
         #MY IMPLEMENTATION
-        self.query_proj = nn.Linear(self.embed_dim, self.embed_dim)
-        self.key_proj = nn.Linear(self.embed_dim, self.embed_dim)
-        self.value_proj = nn.Linear(self.embed_dim, self.embed_dim)
+        self.query_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
+        self.key_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
+        self.value_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
 
         self.dropout = nn.Dropout(dropout)
             
@@ -69,9 +69,9 @@ class MultiHeadAttentionLayer(AttentionLayer):
        
         super().__init__(embed_dim, dropout)
         self.num_heads = num_heads
-
+        
         # TODO: Initialize the following layers and parameters to perform attention
-        self.head_proj = nn.Linear(embed_dim, embed_dim)
+        self.head_proj = nn.Linear(embed_dim, embed_dim, bias=False)
 
     def forward(self, query, key, value, attn_mask=None):
         H = self.num_heads
@@ -89,13 +89,13 @@ class MultiHeadAttentionLayer(AttentionLayer):
         
         #after projection, split the embedding across num_heads
         #eg - expected shape for value is (N, H, T, D/H)
-        query = query.view(N, S, H, D//H).permute(0, 2, 1, 3) #NxHxSxD//H
-        key = key.view(N, T, H, D//H).permute(0, 2, 1, 3) #NxHxTxD//H
-        value = value.view(N, T, H, D//H).permute(0, 2, 1, 3) #NxHxTxD//H
+        query = query.view(N, S, H, D//H).transpose(1, 2) #NxHxSxD//H
+        key = key.view(N, T, H, D//H).transpose(1, 2) #NxHxTxD//H
+        value = value.view(N, T, H, D//H).transpose(1, 2) #NxHxTxD//H
         
         #compute dot-product attention separately for each head. Don't forget the scaling value!
         #Expected shape of dot_product is (N, H, S, T)
-        dot_product = torch.matmul(query, key.mT) #NxHxSxT
+        dot_product = torch.matmul(query, key.transpose(2, 3))/math.sqrt(D/H) #NxHxSxT
 
         if attn_mask is not None:
             # convert att_mask which is multiplicative, to an additive mask
@@ -105,10 +105,7 @@ class MultiHeadAttentionLayer(AttentionLayer):
             additive_mask[additive_mask == 0] = -torch.inf 
             additive_mask[additive_mask == 1] = 0
             dot_product += additive_mask.unsqueeze(0).unsqueeze(1) #NxHxSxT
-        
-        #apply scaling
-        dot_product = dot_product/math.sqrt(D/H) #NxHxSxT
-        
+                
         # apply softmax, dropout, and use value
         y = F.softmax(dot_product, dim=3) #NxHxSXT
         
@@ -120,8 +117,8 @@ class MultiHeadAttentionLayer(AttentionLayer):
         
         # concat embeddings from different heads, and project
         #concatenate
-        y = y.permute(0, 2, 1, 3)
-        y = y.reshape(N, S, D) #NxSxD
+        y = y.transpose(1, 2) #NxSxHxD/H
+        y = y.contiguous().view(N, S, D) #NxSxD
         
         #project
         output = self.head_proj(y) #NxSxD
@@ -134,7 +131,7 @@ class PositionalEncoding(nn.Module):
         super().__init__()
         #MY IMPLEMENTATION
         # TODO - use torch.nn.Embedding to create the encoding. Initialize dropout layer.
-        self.encoding = nn.Embedding(max_len, embed_dim) 
+        self.encoding = nn.Embedding(max_len, embed_dim)#, _freeze=True) 
         self.dropout = nn.Dropout(dropout)
       
     def forward(self, x):
@@ -194,8 +191,12 @@ class CrossAttentionBlock(nn.Module):
         ############# TODO - Cross-attention on the sequence, using conditioning. Add dropout to attention layer output.
         # Then add a residual connection to the original input, and finally apply normalization. #############################
         #MY IMPLEMENTATION
+        #replicate cond
+        cond_cat = torch.cat([cond]*seq.shape[1], dim=1)
+        
         #attention
-        y = self.cross_attn(cond, seq, seq)
+        y = self.cross_attn(seq, cond_cat, cond_cat)
+        #y = self.cross_attn(cond_cat, seq, seq)
         
         #dropout
         y = self.dropout(y)

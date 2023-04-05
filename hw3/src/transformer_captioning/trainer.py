@@ -18,6 +18,7 @@ class Trainer(object):
         self.loss_history = []
         self.val_loss_history = []
         self.device = device
+                
         self.optim = torch.optim.Adam(self.model.parameters(), self.learning_rate)
         
         #MY IMPLEMENTATION
@@ -31,7 +32,7 @@ class Trainer(object):
         #predict loss
         predictions = predictions.permute(0, 2, 1)
         loss = self.loss_fn(predictions, labels)
-
+        
         #mask
         mask = labels != self.model._null
         loss = loss*mask
@@ -69,7 +70,7 @@ class Trainer(object):
             for batch in self.train_dataloader:
                 features, captions = batch[0].to(self.device), batch[1].to(self.device)
                 logits = self.model(features, captions[:, :-1])
-                
+                                
                 loss = self.loss(logits, captions[:, 1:])
                 self.optim.zero_grad()
                 loss.backward()

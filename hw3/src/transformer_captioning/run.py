@@ -52,10 +52,13 @@ def vis_imgs(split):
     for batch in loader:
       features, gt_captions, idxs = batch
       urls = data["%s_urls" % split][idxs]
-      
+
       gt_captions = decode_captions(gt_captions, transformer.idx_to_word)
       sample_captions = transformer.sample(features, max_length=30)
+
+      
       sample_captions = decode_captions(sample_captions, transformer.idx_to_word)
+      
       
       for gt_caption, sample_caption, url in zip(gt_captions, sample_captions, urls):
           img = image_from_url(url)
