@@ -35,7 +35,7 @@ class Trainer(object):
         #mask
         mask = labels != self.model._null
         loss = loss*mask
-                
+        
         #average loss
         loss = loss.mean()
                 
@@ -69,7 +69,7 @@ class Trainer(object):
             for batch in self.train_dataloader:
                 features, captions = batch[0].to(self.device), batch[1].to(self.device)
                 logits = self.model(features, captions[:, :-1])
-
+                
                 loss = self.loss(logits, captions[:, 1:])
                 self.optim.zero_grad()
                 loss.backward()

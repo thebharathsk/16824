@@ -53,7 +53,7 @@ class AttentionLayer(nn.Module):
         dot_product = dot_product/math.sqrt(self.embed_dim) #NxSxT
         
         #apply softmax
-        y = F.softmax(dot_product, dim=1) #NxSxT
+        y = F.softmax(dot_product, dim=2) #NxSxT
         
         #apply dropout
         y = self.dropout(y) #NxSxT
@@ -61,7 +61,7 @@ class AttentionLayer(nn.Module):
         #multiply values
         output = torch.matmul(y, value) #NxSxD
         
-        return output  
+        return output 
 
 class MultiHeadAttentionLayer(AttentionLayer):
 
@@ -125,8 +125,7 @@ class MultiHeadAttentionLayer(AttentionLayer):
         
         #project
         output = self.head_proj(y) #NxSxD
-        
-        
+                
         return output
 
 
@@ -317,8 +316,8 @@ class TransformerDecoder(nn.Module):
         xx, yy = torch.meshgrid(x, x)
         
         #set elements to 1
-        mask[xx <= yy] = 1
-                
+        mask[xx >= yy] = 1
+
         return mask
                                       
     def forward(self, features, captions):
@@ -335,13 +334,11 @@ class TransformerDecoder(nn.Module):
         features_embed, captions_embed = self.get_data_embeddings(features, captions)
         mask = self.get_causal_mask(captions_embed.shape[1])
         mask.to(captions_embed.dtype)
-        
         output = captions_embed
         for layer in self.layers:
             output = layer(output, features_embed, mask=mask)
 
         scores = self.score_projection(output)
-        
         
         return scores
 
