@@ -1,0 +1,38 @@
+#1
+--
+(epoch 10 / 100) loss: 2.723489
+(epoch 20 / 100) loss: 2.235888
+(epoch 30 / 100) loss: 1.930272
+(epoch 40 / 100) loss: 1.676934
+(epoch 50 / 100) loss: 1.492936
+(epoch 60 / 100) loss: 1.215612
+(epoch 70 / 100) loss: 1.059613
+(epoch 80 / 100) loss: 0.819631
+(epoch 90 / 100) loss: 0.652238
+(epoch 100 / 100) loss: 0.508587
+
+#2
+--
+(epoch 10 / 100) loss: 2.573712
+(epoch 20 / 100) loss: 2.077100
+(epoch 30 / 100) loss: 1.728218
+(epoch 40 / 100) loss: 1.348009
+(epoch 50 / 100) loss: 1.023808
+(epoch 60 / 100) loss: 0.748673
+(epoch 70 / 100) loss: 0.547560
+(epoch 80 / 100) loss: 0.394008
+(epoch 90 / 100) loss: 0.237692
+(epoch 100 / 100) loss: 0.147835
+
+#3
+--
+(epoch 10 / 100) loss: 1.087885
+(epoch 20 / 100) loss: 0.186849
+(epoch 30 / 100) loss: 0.088349
+(epoch 40 / 100) loss: 0.022841
+(epoch 50 / 100) loss: 0.065034
+(epoch 60 / 100) loss: 0.071640
+(epoch 70 / 100) loss: 0.039697
+(epoch 80 / 100) loss: 0.027127
+(epoch 90 / 100) loss: 0.069766
+(epoch 100 / 100) loss: 0.068683

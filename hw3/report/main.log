@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.3.30)  30 MAR 2023 10:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2023.3.30)  5 APR 2023 21:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1126,8 +1126,7 @@ Package zref Info: New property: mdf@pagevalue on input line 895.
 Package: subcaption 2020/01/22 v1.3d Sub-captions (AR)
 \c@subfigure=\count435
 \c@subtable=\count436
-) (./mathabbreviations.tex)
-No file main.aux.
+) (./mathabbreviations.tex) (./main.aux)
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 244.
@@ -1147,7 +1146,7 @@ LaTeX Font Info:    ... okay on input line 244.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 244.
 LaTeX Font Info:    ... okay on input line 244.
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 244.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
 *geometry* driver: auto-detecting
@@ -1212,6 +1211,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 244.
 LaTeX Info: Redefining \pageref on input line 244.
 LaTeX Info: Redefining \nameref on input line 244.
+ (./main.out) (./main.out)
 \@outlinefile=\write9
 \openout9 = `main.out'.
 
@@ -1252,30 +1252,35 @@ Overfull \hbox (41.66093pt too wide) in paragraph at lines 284--287
 []\OT1/ptm/b/n/10.95 Setup: \OT1/ptm/m/n/10.95 Run the fol-low-ing com-mand to ex-tract COCO data, in the \OT1/pcr/m/n/10.95 transformer[]captioning/datasets
  []
 
-<example-image.pdf, id=26, 321.2pt x 240.9pt>
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 309.
+<./results/transformer_captioning/results_1/case1_loss_out.png, id=34, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_1/case1_loss_out.png Graphic file (type png)
+<use ./results/transformer_captioning/results_1/case1_loss_out.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_1/case1_loss_out.png  used on input line 309.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 313.
+<./results/transformer_captioning/results_2/case1_loss_out.png, id=36, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_2/case1_loss_out.png Graphic file (type png)
+<use ./results/transformer_captioning/results_2/case1_loss_out.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_2/case1_loss_out.png  used on input line 313.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 317.
+<./results/transformer_captioning/results_3/case1_loss_out.png, id=37, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_3/case1_loss_out.png Graphic file (type png)
+<use ./results/transformer_captioning/results_3/case1_loss_out.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_3/case1_loss_out.png  used on input line 317.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 327.
+<./results/transformer_captioning/results_3/case1_train_0.png, id=38, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_3/case1_train_0.png Graphic file (type png)
+<use ./results/transformer_captioning/results_3/case1_train_0.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_3/case1_train_0.png  used on input line 327.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 331.
+<./results/transformer_captioning/results_3/case1_train_3.png, id=39, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_3/case1_train_3.png Graphic file (type png)
+<use ./results/transformer_captioning/results_3/case1_train_3.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_3/case1_train_3.png  used on input line 331.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 335.
+<./results/transformer_captioning/results_3/case1_train_4.png, id=40, 462.528pt x 346.896pt>
+File: ./results/transformer_captioning/results_3/case1_train_4.png Graphic file (type png)
+<use ./results/transformer_captioning/results_3/case1_train_4.png>
+Package pdftex.def Info: ./results/transformer_captioning/results_3/case1_train_4.png  used on input line 335.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 322--338
@@ -1284,29 +1289,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 322--338
 
 [2
 
- </usr/share/texlive/texmf-dist/tex/latex/mwe/example-image.pdf>]
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 360.
+ <./results/transformer_captioning/results_1/case1_loss_out.png> <./results/transformer_captioning/results_2/case1_loss_out.png> <./results/transformer_captioning/results_3/case1_loss_out.png> <./results/transformer_captioning/results_3/case1_train_0.png> <./results/transformer_captioning/results_3/case1_train_3.png> <./results/transformer_captioning/results_3/case1_train_4.png>]
+<./results/vit_classification/acc_out.png, id=58, 462.528pt x 346.896pt>
+File: ./results/vit_classification/acc_out.png Graphic file (type png)
+<use ./results/vit_classification/acc_out.png>
+Package pdftex.def Info: ./results/vit_classification/acc_out.png  used on input line 360.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
-File: example-image.pdf Graphic file (type pdf)
-<use example-image.pdf>
-Package pdftex.def Info: example-image.pdf  used on input line 364.
+<./results/vit_classification/loss_out.png, id=59, 462.528pt x 346.896pt>
+File: ./results/vit_classification/loss_out.png Graphic file (type png)
+<use ./results/vit_classification/loss_out.png>
+Package pdftex.def Info: ./results/vit_classification/loss_out.png  used on input line 364.
 (pdftex.def)             Requested size: 150.32504pt x 112.74515pt.
  [3
 
-] [4
+ <./results/vit_classification/acc_out.png> <./results/vit_classification/loss_out.png>] [4
 
 ]
 This exam contains 2 questions with 0 parts, 0 subparts, and 0 subsubparts.
 This exam has a total of 0 points.
 This exam has a total of 0 bonus points.
-
-Class exam Warning: Point totals have changed. Rerun to get point totals right.
-
-
-Package lastpage Warning: Rerun to get the references right on input line 405.
-
 
 AED: lastpage setting LastPage
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
@@ -1314,33 +1315,23 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
 (./main.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 405.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 405.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  B65AC6239D7D732C936DBE7714ADFADD;171.
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: B65AC6239D7D732C936DBE7714ADFADD;171.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 405.
  ) 
 Here is how much of TeX's memory you used:
- 33100 strings out of 481239
- 659651 string characters out of 5920377
- 1028093 words of memory out of 5000000
- 47683 multiletter control sequences out of 15000+600000
+ 33160 strings out of 481239
+ 662397 string characters out of 5920377
+ 1028423 words of memory out of 5000000
+ 47726 multiletter control sequences out of 15000+600000
  553335 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,10n,95p,1240b,965s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss17.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (4 pages, 106404 bytes).
+ 60i,10n,95p,1240b,963s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (4 pages, 1127506 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 109 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  15 named destinations out of 1000 (max. 500000)
- 18 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 69 words of extra memory for PDF output out of 10000 (max. 10000000)
 
