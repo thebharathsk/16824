@@ -15,4 +15,6 @@ hw2/src/diffusion/epoch_199.pth
 #HW3
 hw3/src/transformer_captioning/datasets/coco_captioning
 hw3/src/transformer_captioning/plots
+hw3/src/vit_classification/checkpoints
+hw3/src/vit_classification/data
 *.pyc

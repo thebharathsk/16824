@@ -22,6 +22,9 @@ class Trainer:
         self.test_accuracy_history = [[], []]
         self.train_accuracy_history = [[], []]
 
+        #MY IMPLEMENTATION
+        self.loss_fn = torch.nn.CrossEntropyLoss()
+        
     def eval(self, dataloader):
         total_datapoints = 0
         correct_predictions = 0
@@ -49,9 +52,9 @@ class Trainer:
 
         
         # TODO - Compute cross entropy loss between predictions and labels. 
-        loss = None
+        #MY IMPLEMENTATION
+        loss = self.loss_fn(predictions, labels)
         
-
         return loss
 
     def train(self):
