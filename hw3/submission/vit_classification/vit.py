@@ -110,7 +110,7 @@ class ViT(nn.Module):
 
         output = self.positional_encoding(patches_embedded) #NxP+1xD
         
-        mask = torch.ones((self.num_patches+1, self.num_patches+1), device=self.device) #PxP
+        mask = torch.ones((self.num_patches+1, self.num_patches+1), device=self.device) #P+1xP+1
         
         for layer in self.layers:
             output = layer(output, mask)

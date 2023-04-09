@@ -15,9 +15,9 @@ class AttentionLayer(nn.Module):
         # TODO: Initialize the following layers and parameters to perform attention
         # This class assumes that the input dimension for query, key and value is embed_dim
         #MY IMPLEMENTATION
-        self.query_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
-        self.key_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
-        self.value_proj = nn.Linear(self.embed_dim, self.embed_dim, bias=False)
+        self.query_proj = nn.Linear(self.embed_dim, self.embed_dim)
+        self.key_proj = nn.Linear(self.embed_dim, self.embed_dim)
+        self.value_proj = nn.Linear(self.embed_dim, self.embed_dim)
 
         self.dropout = nn.Dropout(dropout)
             
@@ -50,7 +50,7 @@ class AttentionLayer(nn.Module):
 
         # apply softmax, dropout, and use value
         #apply scaling
-        dot_product = dot_product/math.sqrt(self.embed_dim) #NxSxT
+        dot_product = dot_product/math.sqrt(D) #NxSxT
         
         #apply softmax
         y = F.softmax(dot_product, dim=2) #NxSxT
@@ -71,7 +71,7 @@ class MultiHeadAttentionLayer(AttentionLayer):
         self.num_heads = num_heads
         
         # TODO: Initialize the following layers and parameters to perform attention
-        self.head_proj = nn.Linear(embed_dim, embed_dim, bias=False)
+        self.head_proj = nn.Linear(embed_dim, embed_dim)
 
     def forward(self, query, key, value, attn_mask=None):
         H = self.num_heads
